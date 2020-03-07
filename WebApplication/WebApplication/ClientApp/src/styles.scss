@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+
+* {
+  font-family: Roboto;
+}
+
+body {
+  margin: 0px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &:active {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+//scrollbar
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 2.5px;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+//form fields
+textarea {
+  resize: none !important;
+}
