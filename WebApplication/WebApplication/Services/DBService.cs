@@ -22,7 +22,8 @@ namespace WebApplication.Services
                 AuthTokens.Basic(
                     configuration["DB:Username"], 
                     configuration["DB:Password"]
-            ));
+                )
+            );
         }
 
         public ISession GetSession()
