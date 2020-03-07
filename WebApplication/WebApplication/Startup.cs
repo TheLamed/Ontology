@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApplication.Services;
 
 namespace WebApplication
 {
@@ -26,6 +27,12 @@ namespace WebApplication
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            //SERVICES
+            services.AddTransient<DBService>();
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
