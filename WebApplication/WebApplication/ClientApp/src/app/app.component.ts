@@ -5,5 +5,13 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  
+  isLoad: boolean = true;
+
+  onActivate(event) {
+    this.isLoad = false;
+  }
+
+  onDeactivate(event) {
+    this.isLoad = true;
+  }
 }

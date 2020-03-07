@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<div *ngIf="isLoad" class="preloader-container">
+  <mat-spinner></mat-spinner>
+</div>
+
+<router-outlet (activate)="onActivate($event)"
+               (deactivate)="onDeactivate($event)">
+</router-outlet>
+
