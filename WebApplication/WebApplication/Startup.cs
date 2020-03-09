@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApplication.Interfaces;
 using WebApplication.Services;
 
 namespace WebApplication
@@ -30,7 +31,7 @@ namespace WebApplication
 
             //SERVICES
             services.AddTransient<DBService>();
-
+            services.AddTransient<IWordComparisonService, JaroWinklerWordComparisonService>();
 
 
         }
