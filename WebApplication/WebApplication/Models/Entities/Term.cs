@@ -10,6 +10,8 @@ namespace WebApplication.Models.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string Source { get; set; }
+        public bool IsFullMatch { get; set; }
+        public Status Status { get; set; }
 
         public List<Used> UsedIn { get; set; }
         public List<Used> UsedBy { get; set; }

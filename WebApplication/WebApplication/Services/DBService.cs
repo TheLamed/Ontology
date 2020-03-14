@@ -9,9 +9,15 @@ namespace WebApplication.Services
 {
     public class DBService
     {
-        public IDriver _driver;
+        #region Private Members
 
-        public IConfiguration _configuration;
+        private IDriver _driver;
+
+        private IConfiguration _configuration;
+
+        #endregion
+
+        #region Constructor
 
         public DBService(IConfiguration configuration)
         {
@@ -26,9 +32,15 @@ namespace WebApplication.Services
             );
         }
 
+        #endregion
+
+        #region Methods
+
         public ISession GetSession()
         {
             return _driver.Session();
         }
+
+        #endregion
     }
 }
