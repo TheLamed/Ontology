@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Models.Entities
 {
-    public class Used : Relation<Term, Term>
+    public class Member : Relation<Theme, Term>
     {
 
     }

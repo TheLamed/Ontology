@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Models.Entities
 {
-    public class Theme
+    public class Theme : Node
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public List<Subtheme> Children { get; set; }
         public List<Subtheme> Parents { get; set; }
+        public List<Member> Members { get; set; }
     }
 }

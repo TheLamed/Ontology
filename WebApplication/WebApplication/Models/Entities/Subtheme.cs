@@ -5,12 +5,8 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Models.Entities
 {
-    public class Subtheme
+    public class Subtheme : Relation<Theme, Theme>
     {
-        public int Id { get; set; }
-        public int FromId { get; set; }
-        public Theme From { get; set; }
-        public int ToId { get; set; }
-        public Theme To { get; set; }
+        
     }
 }

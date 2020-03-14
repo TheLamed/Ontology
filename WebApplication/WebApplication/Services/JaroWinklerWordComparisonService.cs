@@ -26,14 +26,20 @@ namespace WebApplication.Services
         /// <param name="first">First string</param>
         /// <param name="second">Second string</param>
         /// <returns></returns>
-        public bool Compare(string first, string second)
+        public double Compare(string first, string second)
         {
             var value = Proximity(first, second);
+            return value;
+        }
 
-            if (value >= minValue)
-                return true;
-
-            return false;
+        /// <summary>
+        /// Checks whether the coefficient satisfies the condition.
+        /// </summary>
+        /// <param name="value">Value of Jaro-Winkler distance</param>
+        /// <returns></returns>
+        public bool IsSatisfy(double value)
+        {
+            return value >= minValue;
         }
 
         #endregion

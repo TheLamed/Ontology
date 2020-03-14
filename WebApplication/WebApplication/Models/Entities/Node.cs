@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Models.Entities
 {
-    public class Used : Relation<Term, Term>
+    public class Node
     {
-
+        public int Id { get; set; }
     }
 }

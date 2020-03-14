@@ -7,6 +7,7 @@ namespace WebApplication.Interfaces
 {
     public interface IWordComparisonService
     {
-        public bool Compare(string first, string second);
+        public double Compare(string first, string second);
+        public bool IsSatisfy(double value);
     }
 }
