@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApplication.Models.Entities
+namespace WebApplication.Interfaces.Admin
 {
-    public class Node
+    public interface ITermBindingService
     {
-        public long Id { get; set; }
+        Task StartProcessing();
     }
 }
