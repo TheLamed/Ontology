@@ -62,29 +62,6 @@ namespace WebApplication.Services.Admin
 
             using (var session = _db.GetSession())
             {
-                //try
-                //{
-                //    var result = await session.RunAsync(_transactions.GetUnindexedTerms());
-                //    var record = await result.PeekAsync();
-
-                //    _count = record.Values.Values.Count();
-
-                //    foreach (var item in record.Values.Values)
-                //    {
-                //        var term = new Term(item as INode);
-                //        await Index(term, session);
-
-                //        term.Status = Status.Indexed;
-                //        await session.RunAsync(string.Format(_transactions.UpdateTermStatus(), term.Id, (int)Status.Indexed));
-
-                //        _indexed++;
-                //    }
-                //}
-                //catch(Exception e)
-                //{
-                //    Console.WriteLine(e);
-                //}
-
                 var result = await session.RunAsync(_transactions.GetUnindexedTerms());
                 
                 while (await result.FetchAsync())
