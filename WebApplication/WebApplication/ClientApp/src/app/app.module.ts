@@ -7,22 +7,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-
 import { MatProgressSpinnerModule } from '@angular/material';
 
 const routes: Routes = [
   {
     path: '',
-  },
-  {
-    path: 'a',
-    loadChildren: () => import('./main/admin/admin.module').then(m => m.AdminModule),
+    loadChildren: './main/main.module#MainModule',
   }
 ];
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,6 +30,36 @@ const routes: Routes = [
 
     MatProgressSpinnerModule,
   ],
-  providers: []
+  providers: [
+
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+//@NgModule({
+//  declarations: [
+//    AppComponent,
+//  ],
+//  imports: [
+//    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+//    BrowserAnimationsModule,
+//    CommonModule,
+//    HttpClientModule,
+//    FormsModule,
+//    RouterModule.forRoot(routes),
+
+//    MatProgressSpinnerModule,
+//    MatSnackBarModule,
+//    MatDialogModule,
+//  ],
+//  providers: [
+//    UsabilitiesService,
+//    DialogService,
+
+//    LoginApiService,
+//    AuthService,
+//  ],
+//  bootstrap: [AppComponent]
+//})
+//export class AppModule { }

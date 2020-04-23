@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.2" />
     <PackageReference Include="Neo4jClient" Version="4.0.0.1-prerelease" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.1.0" />
@@ -27,11 +28,37 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\guards\admin.guard.ts" />
     <None Remove="ClientApp\src\app\main\admin\admin.module.ts" />
+    <None Remove="ClientApp\src\app\main\admin\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\main\main.module.ts" />
+    <None Remove="ClientApp\src\app\services\api\api-login.service.ts" />
+    <None Remove="ClientApp\src\app\services\auth.service.ts" />
+    <None Remove="ClientApp\src\app\services\dialog.service.ts" />
+    <None Remove="ClientApp\src\app\services\usabilities.service.ts" />
+    <None Remove="ClientApp\src\decorators\api.decorator.ts" />
+    <None Remove="ClientApp\src\models\api-response.model.ts" />
+    <None Remove="ClientApp\src\models\login\login-request.model.ts" />
+    <None Remove="ClientApp\src\models\login\login-response.model.ts" />
+    <None Remove="ClientApp\src\models\model-response.model.ts" />
+    <None Remove="ClientApp\src\models\user.model.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\guards\admin.guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\main\admin\admin.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\main\admin\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\main\main.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\api\api-login.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\dialog.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\usabilities.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\decorators\api.decorator.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\api-response.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\login\login-request.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\login\login-response.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\model-response.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\user.model.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

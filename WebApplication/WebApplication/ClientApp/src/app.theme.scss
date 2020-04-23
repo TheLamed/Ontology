@@ -126,3 +126,10 @@ $breakpoints: ( xs: 'screen and (max-width: 599px)', sm: 'screen and (min-width:
     padding: 0px 0px 12px 0px;
   }
 }
+
+//Components
+.card {
+  background-color: $default-foreground;
+  border-radius: 4px;
+  @include mat-elevation(2);
+}

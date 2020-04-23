@@ -1,0 +1,31 @@
+<div class="back" fxLayoutAlign="center center">
+  <form class="card p-24" fxLayout="column" fxLayoutAlign="space-between stretch"
+        [formGroup]="form">
+
+    <h1 fxLayoutAlign="center center">Увійти</h1>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Логін</mat-label>
+      <input matInput
+             formControlName="login"
+             placeholder="Логін">
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error *ngIf="form.controls['login'].hasError('required')">Введіть логін</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Пароль</mat-label>
+      <input matInput type="password"
+             formControlName="password"
+             placeholder="Пароль">
+      <mat-icon matSuffix>vpn_key</mat-icon>
+      <mat-error *ngIf="form.controls['password'].hasError('required')">Введіть пароль</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary"
+            (click)="login()">
+      Увійти
+    </button>
+
+  </form>
+</div>

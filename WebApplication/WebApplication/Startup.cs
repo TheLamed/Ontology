@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,10 +6,15 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using WebApplication.Interfaces;
 using WebApplication.Interfaces.Admin;
+using WebApplication.Interfaces.Authorization;
+using WebApplication.Models;
 using WebApplication.Services;
 using WebApplication.Services.Admin;
+using WebApplication.Services.Authorization;
 
 namespace WebApplication
 {
@@ -36,9 +42,32 @@ namespace WebApplication
                 c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Values Api", Version = "v1" });
             });
 
+            //Authentication
+            var authOptions = Configuration.GetSection("AuthOptions").Get<AuthOptions>();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    RequireExpirationTime = true,
+                    ValidIssuer = authOptions.Issuer,
+                    ValidAudience = authOptions.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authOptions.SecureKey))
+                };
+            });
+
             //SERVICES
             services.AddTransient<DBService>();
+            services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<AdminTransactionsService>();
+            services.AddTransient<TransactionService>();
             services.AddTransient<IWordComparisonService, JaroWinklerWordComparisonService>();
             services.AddTransient<IThemeService, ThemeService>();
             services.AddTransient<ITermService, TermService>();
@@ -78,6 +107,9 @@ namespace WebApplication
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
