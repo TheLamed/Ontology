@@ -17,6 +17,13 @@ namespace WebApplication.Services.Admin
                 "SET n.name = $Name " +
                 "RETURN n ";
         }
+        public string AddParentTheme()
+        {
+            return "MATCH (n:Theme) WHERE id(n) = {0} " +
+                "MATCH (m:Theme) WHERE id(m) = {1} " +
+                "CREATE (n)-[r:Subtheme]->(m) " +
+                "RETURN r";
+        }
         public string UpdateTheme()
         {
             return "MATCH (n:Theme) " +
@@ -29,6 +36,15 @@ namespace WebApplication.Services.Admin
             return "MATCH (n:Theme) " +
                 "WHERE id(n) = {0} " +
                 "DETACH DELETE n ";
+        }
+
+        public string GetThemes()
+        {
+            return "MATCH (t:Theme) WHERE NOT (t)-->(:Theme) " +
+                "RETURN t AS theme, null AS parent " +
+                "UNION " +
+                "MATCH(t:Theme)-[:Subtheme * 1]->(p:Theme) " +
+                "RETURN t AS theme, p AS parent ";
         }
 
         #endregion

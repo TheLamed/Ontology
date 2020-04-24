@@ -4,21 +4,21 @@ import { Observable } from "rxjs";
 import { AuthService } from "../services/auth.service";
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class AuthoriseGuard implements CanActivate {
 
   constructor(
     private _auth: AuthService,
     private _router: Router,
   ) {
-    
+
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-    if (localStorage.getItem('token') != null) {
+    if (localStorage.getItem('token') == null) {
       return true;
     }
 
-    this._router.navigateByUrl('a/login');
+    this._router.navigateByUrl('a');
     return false;
   }
 }

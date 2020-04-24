@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Interfaces.Admin;
-using WebApplication.Models.Theme;
+using WebApplication.Models.Themes;
 using WebApplication.Services.Admin;
 
 namespace WebApplication.Controllers.Admin
@@ -66,6 +66,14 @@ namespace WebApplication.Controllers.Admin
                 return BadRequest("Model is not valid");
 
             return Ok(await _themeService.UpdateTheme(id, model));
+        }
+
+        [HttpGet]
+        [Route("")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<bool>> GetThemes()
+        {
+            return Ok(await _themeService.GetThemes());
         }
 
         #endregion

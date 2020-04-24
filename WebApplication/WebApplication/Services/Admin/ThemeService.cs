@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Interfaces.Admin;
-using WebApplication.Models.Theme;
+using WebApplication.Models.Entities;
+using WebApplication.Models.Themes;
 
 namespace WebApplication.Services.Admin
 {
@@ -40,8 +41,20 @@ namespace WebApplication.Services.Admin
                 var result = await session.RunAsync(_transactions.AddTheme(), model);
                 var record = await result.SingleAsync();
 
-                if (!(record.Values.Single().Value is INode))
+                long id;
+
+                if (!(record.Values.Single().Value is INode node))
                     return false;
+                else
+                    id = node.Id;
+
+                if(model.Parents != null)
+                    foreach (var item in model.Parents)
+                    {
+                        var relresult = await session.RunAsync(
+                            string.Format(_transactions.AddParentTheme(), id, item), 
+                            model);
+                    }
             }
 
             return true;
@@ -59,23 +72,32 @@ namespace WebApplication.Services.Admin
             return true;
         }
 
-        public async Task<bool> EditChildrenTheme(long id, List<long> children)
+        public async Task<List<ThemeModel>> GetThemes()
         {
             using (var session = _db.GetSession())
             {
+                var list = new List<ThemeModel>();
 
+                var result = await session.RunAsync(_transactions.GetThemes());
 
-                var result = await session.RunAsync(
-                    string.Format(_transactions.DeleteTheme(), id)
-                );
+                while (await result.FetchAsync())
+                {
+                    var theme = new Theme(result.Current[0] as INode);
+                    var model = new ThemeModel(theme);
+
+                    var exist = list.Find(v => v.Id == model.Id);
+                    if (exist != null) model = exist;
+                    else list.Add(model);
+
+                    if(result.Current[1] != null)
+                    {
+                        var parent = new Theme(result.Current[1] as INode);
+                        model.Parents.Add(parent.Id);
+                    }
+                }
+
+                return list;
             }
-
-            return true;
-        }
-
-        public Task<List<ThemeModel>> GetThemes()
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<bool> UpdateTheme(long id, AddThemeModel model)

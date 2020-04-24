@@ -9,23 +9,37 @@ import { LoginComponent } from './login/login.component';
 import { AdminGuard } from '../../guards/admin.guard';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormField, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule } from '@angular/material';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthoriseGuard } from '../../guards/authorise.guard';
+import { ThemesComponent } from './themes/themes.component';
 
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'login',
-    //canActivate: [AdminGuard],
+    component: DashboardComponent,
+    canActivate: [AdminGuard],
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [AuthoriseGuard],
   },
+  {
+    path: 'themes',
+    component: ThemesComponent,
+    canActivate: [AdminGuard],
+  },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
+    ThemesComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +58,7 @@ const routes: Routes = [
   ],
   providers: [
     AdminGuard,
+    AuthoriseGuard,
   ]
 })
 export class AdminModule { }

@@ -29,8 +29,11 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\guards\admin.guard.ts" />
+    <None Remove="ClientApp\src\app\guards\authorise.guard.ts" />
     <None Remove="ClientApp\src\app\main\admin\admin.module.ts" />
+    <None Remove="ClientApp\src\app\main\admin\dashboard\dashboard.component.ts" />
     <None Remove="ClientApp\src\app\main\admin\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\main\admin\themes\themes.component.ts" />
     <None Remove="ClientApp\src\app\main\main.module.ts" />
     <None Remove="ClientApp\src\app\services\api\api-login.service.ts" />
     <None Remove="ClientApp\src\app\services\auth.service.ts" />
@@ -46,8 +49,15 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\guards\admin.guard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\guards\authorise.guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\main\admin\admin.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\main\admin\dashboard\dashboard.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\main\admin\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\main\admin\themes\themes.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\main\main.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api\api-login.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\auth.service.ts" />

@@ -128,6 +128,15 @@ $breakpoints: ( xs: 'screen and (max-width: 599px)', sm: 'screen and (min-width:
 }
 
 //Components
+.back {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  background-color: mat-color($primary, darker);
+}
+
 .card {
   background-color: $default-foreground;
   border-radius: 4px;
