@@ -43,7 +43,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe(isLogined => {
         if (isLogined == null) return;
 
-        if (isLogined) this._router.navigateByUrl('a');
+        if (isLogined) {
+          this._router.navigateByUrl('/a/dashboard');
+        }
         else {
           this.isWrongLogin = true;
           this._dialog.showSnackBar('Неправельни логін або пароль!');

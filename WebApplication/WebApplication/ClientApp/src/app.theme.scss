@@ -6,6 +6,8 @@
 $default-background: #d0d0d0;
 $default-foreground: #ffffff;
 
+$default-divider: rgba(0, 0, 0, 0.12);
+
 $primary: mat-palette($mat-pink);
 $accent: mat-palette($mat-purple);
 $warn: mat-palette($mat-red);
@@ -124,6 +126,12 @@ $breakpoints: ( xs: 'screen and (max-width: 599px)', sm: 'screen and (min-width:
 .dialog-container-zero-padding {
   .mat-dialog-container {
     padding: 0px 0px 12px 0px;
+  }
+}
+
+.add-theme-dialog {
+  .mat-dialog-container {
+    width: 400px;
   }
 }
 

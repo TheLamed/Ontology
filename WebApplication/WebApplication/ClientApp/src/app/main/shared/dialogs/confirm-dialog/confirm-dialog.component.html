@@ -1,0 +1,9 @@
+<div mat-dialog-title>Підтвердження</div>
+<div mat-dialog-content>
+  <div *ngIf="!message">Ви впевнені?</div>
+  <div *ngIf="message">{{message}}</div>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="close(true)">Підтвердити</button>
+  <button mat-button color="warn" (click)="close(false)">Скасувати</button>
+</div>

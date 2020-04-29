@@ -89,10 +89,12 @@ namespace WebApplication.Services.Admin
                     if (exist != null) model = exist;
                     else list.Add(model);
 
-                    if(result.Current[1] != null)
+                    model.CountOfTerms = (long)result.Current[2];
+
+                    if (result.Current[1] != null)
                     {
                         var parent = new Theme(result.Current[1] as INode);
-                        model.Parents.Add(parent.Id);
+                        model.Parents.Add(new ThemeModel(parent) { Parents = null });
                     }
                 }
 

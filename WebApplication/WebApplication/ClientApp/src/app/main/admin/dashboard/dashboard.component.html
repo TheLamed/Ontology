@@ -1,3 +1,17 @@
 <div class="back">
-
+  <div class="card m-24 p-12 w-300"
+       fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+    <a mat-button [routerLink]="'/a/themes'">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span>Теми</span>
+        <mat-icon>bookmarks</mat-icon>
+      </div>
+    </a>
+    <a mat-button [routerLink]="'/a/terms'">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span>Терміни</span>
+        <mat-icon>extension</mat-icon>
+      </div>
+    </a>
+  </div>
 </div>

@@ -41,10 +41,10 @@ namespace WebApplication.Services.Admin
         public string GetThemes()
         {
             return "MATCH (t:Theme) WHERE NOT (t)-->(:Theme) " +
-                "RETURN t AS theme, null AS parent " +
+                "RETURN t AS theme, null AS parent, SIZE((t)<--(:Term)) AS count " +
                 "UNION " +
-                "MATCH(t:Theme)-[:Subtheme * 1]->(p:Theme) " +
-                "RETURN t AS theme, p AS parent ";
+                "MATCH (t:Theme)-[:Subtheme * 1]->(p:Theme) " +
+                "RETURN t AS theme, p AS parent, SIZE((t)<--(:Term)) AS count ";
         }
 
         #endregion

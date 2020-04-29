@@ -1,0 +1,62 @@
+<div mat-dialog-title class="w-100-p"
+     fxLayout="row" fxLayoutAlign="space-between center"
+     fxLayoutGap="24px">
+  <div *ngIf="isEdit">Редагувати тему</div>
+  <div *ngIf="!isEdit">Додати тему</div>
+  <button mat-icon-button
+          (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div mat-dialog-content>
+  <form fxLayout="column" fxLayoutAlign="start stretch"
+        [formGroup]="form"
+        (ngSubmit)="isEdit ? editTheme() : addTheme()">
+    <mat-form-field appearance="outline">
+      <mat-label>Назва</mat-label>
+      <input matInput
+             formControlName="name"
+             placeholder="Назва Теми">
+      <mat-error *ngIf="form.controls['name'].hasError('required')">Введіть назву теми</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" *ngIf="!isEdit">
+      <mat-label>Батьківські Теми</mat-label>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let item of themes"
+                  [selectable]="selectable"
+                  [removable]="removable"
+                  (removed)="remove(item)">
+          {{item.name}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="Тема"
+               #themeInput
+               formControlName="parents"
+               [matAutocomplete]="auto"
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let item of filteredThemes | async" [value]="item">
+          {{item.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary"
+          *ngIf="isEdit"
+          (click)="editTheme()">
+    Зберегти
+  </button>
+  <button mat-raised-button color="primary"
+          *ngIf="!isEdit"
+          (click)="addTheme()">
+    Додати
+  </button>
+  <button mat-button color="warn" (click)="close()">
+    Скасувати
+  </button>
+</div>

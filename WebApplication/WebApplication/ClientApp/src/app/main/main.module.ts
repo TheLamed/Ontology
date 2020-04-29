@@ -7,6 +7,9 @@ import { UsabilitiesService } from "../services/usabilities.service";
 import { DialogService } from "../services/dialog.service";
 import { LoginApiService } from "../services/api/api-login.service";
 import { AuthService } from "../services/auth.service";
+import { ThemesApiService } from "../services/api/api-themes.service";
+import { ThemesService } from "../services/themes.service";
+import { ConfirmDialogModule } from "./shared/dialogs/confirm-dialog/confirm-dialog.module";
 
 const routes: Routes = [
   {
@@ -24,6 +27,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     CommonModule,
 
+    ConfirmDialogModule,
+
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatDialogModule,
@@ -33,7 +38,10 @@ const routes: Routes = [
     DialogService,
 
     LoginApiService,
+    ThemesApiService,
+
     AuthService,
+    ThemesService,
   ],
 })
 export class MainModule { }

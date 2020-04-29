@@ -32,6 +32,7 @@ namespace WebApplication.Controllers.Admin
         #region Calls
 
         [HttpPost]
+        [Route("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<bool>> AddTheme([FromBody]AddThemeModel model)
@@ -71,7 +72,7 @@ namespace WebApplication.Controllers.Admin
         [HttpGet]
         [Route("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<bool>> GetThemes()
+        public async Task<ActionResult<List<ThemeModel>>> GetThemes()
         {
             return Ok(await _themeService.GetThemes());
         }

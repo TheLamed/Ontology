@@ -33,17 +33,24 @@
     <None Remove="ClientApp\src\app\main\admin\admin.module.ts" />
     <None Remove="ClientApp\src\app\main\admin\dashboard\dashboard.component.ts" />
     <None Remove="ClientApp\src\app\main\admin\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\main\admin\themes\add-theme-dialog\add-theme-dialog.component.ts" />
     <None Remove="ClientApp\src\app\main\admin\themes\themes.component.ts" />
     <None Remove="ClientApp\src\app\main\main.module.ts" />
+    <None Remove="ClientApp\src\app\main\shared\dialogs\confirm-dialog\confirm-dialog.component.ts" />
+    <None Remove="ClientApp\src\app\main\shared\dialogs\confirm-dialog\confirm-dialog.module.ts" />
     <None Remove="ClientApp\src\app\services\api\api-login.service.ts" />
+    <None Remove="ClientApp\src\app\services\api\api-themes.service.ts" />
     <None Remove="ClientApp\src\app\services\auth.service.ts" />
     <None Remove="ClientApp\src\app\services\dialog.service.ts" />
+    <None Remove="ClientApp\src\app\services\themes.service.ts" />
     <None Remove="ClientApp\src\app\services\usabilities.service.ts" />
     <None Remove="ClientApp\src\decorators\api.decorator.ts" />
     <None Remove="ClientApp\src\models\api-response.model.ts" />
     <None Remove="ClientApp\src\models\login\login-request.model.ts" />
     <None Remove="ClientApp\src\models\login\login-response.model.ts" />
     <None Remove="ClientApp\src\models\model-response.model.ts" />
+    <None Remove="ClientApp\src\models\themes\add-theme.model.ts" />
+    <None Remove="ClientApp\src\models\themes\theme.model.ts" />
     <None Remove="ClientApp\src\models\user.model.ts" />
   </ItemGroup>
 
@@ -55,19 +62,30 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\main\admin\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\main\admin\themes\add-theme-dialog\add-theme-dialog.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\main\admin\themes\themes.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\main\main.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\main\shared\dialogs\confirm-dialog\confirm-dialog.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\main\shared\dialogs\confirm-dialog\confirm-dialog.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\api\api-themes.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\services\api\api-login.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\auth.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\dialog.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\themes.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\usabilities.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\decorators\api.decorator.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\api-response.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\login\login-request.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\login\login-response.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\model-response.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\themes\add-theme.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\themes\theme.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\user.model.ts" />
   </ItemGroup>
 

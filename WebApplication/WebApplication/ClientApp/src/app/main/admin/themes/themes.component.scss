@@ -1,2 +1,32 @@
 @import 'src/app.theme.scss';
 
+.example-detail-row {
+  min-height: unset;
+}
+
+.example-element-row {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+mat-cell:first-of-type, mat-header-cell:first-of-type {
+  padding-left: 0px;
+}
+
+mat-cell:last-of-type, mat-header-cell:last-of-type {
+  padding-right: 0px;
+}
+
+.header {
+  padding: 12px 12px 12px 8px;
+  border-bottom: 1px solid $default-divider;
+
+  .h {
+    font-weight: bold;
+    font-size: 24px;
+  }
+}

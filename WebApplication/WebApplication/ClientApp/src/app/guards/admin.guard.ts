@@ -14,11 +14,12 @@ export class AdminGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-    if (localStorage.getItem('token') != null) {
+    if (localStorage.getItem('token') == null) {
+      //this._router.navigateByUrl('a/login');
+      return false;
+    }
+    else {
       return true;
     }
-
-    this._router.navigateByUrl('a/login');
-    return false;
   }
 }

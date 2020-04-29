@@ -18,7 +18,7 @@ export class AuthoriseGuard implements CanActivate {
       return true;
     }
 
-    this._router.navigateByUrl('a');
+    this._router.navigateByUrl('a/dashboard');
     return false;
   }
 }

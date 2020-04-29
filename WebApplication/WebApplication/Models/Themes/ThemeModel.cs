@@ -12,7 +12,9 @@ namespace WebApplication.Models.Themes
 
         public string Name { get; set; }
 
-        public List<long> Parents { get; set; }
+        public long CountOfTerms { get; set; }
+
+        public List<ThemeModel> Parents { get; set; }
 
         public ThemeModel()
         {
@@ -23,7 +25,7 @@ namespace WebApplication.Models.Themes
         {
             Id = theme.Id;
             Name = theme.Name;
-            Parents = new List<long>();
+            Parents = new List<ThemeModel>();
         }
     }
 }
