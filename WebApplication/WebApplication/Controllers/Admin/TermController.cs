@@ -33,7 +33,7 @@ namespace WebApplication.Controllers.Admin
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> AddTerm([FromBody]TermModel model)
+        public async Task<ActionResult<bool>> AddTerm([FromBody]EditTermModel model)
         {
             if (model == null)
                 return BadRequest("Model is empty");
@@ -55,7 +55,7 @@ namespace WebApplication.Controllers.Admin
         [Route("{id:long}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> UpdateTerm(long id, [FromBody]TermModel model)
+        public async Task<ActionResult<bool>> UpdateTerm(long id, [FromBody]EditTermModel model)
         {
             if (model == null)
                 return BadRequest("Model is empty");
@@ -81,6 +81,20 @@ namespace WebApplication.Controllers.Admin
         {
             return Ok(await _termService.DeleteThemeFromTerm(termId, themeId));
         }
+
+        [HttpGet]
+        [Route("")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<PagingList<TermModel>>> GetTerms
+        (
+            [FromQuery]int pn = 0,
+            [FromQuery]int ps = 10,
+            [FromQuery]string sort = "asc"
+        )
+        {
+            return Ok(await _termService.GetTerms(pn, ps, sort));
+        }
+
 
         #endregion
     }

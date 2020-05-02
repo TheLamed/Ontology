@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatTableModule, MatAutocompleteModule, MatChipsModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatTableModule, MatAutocompleteModule, MatChipsModule, MatTabsModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from '../../guards/admin.guard';
 import { AuthoriseGuard } from '../../guards/authorise.guard';
@@ -27,11 +27,11 @@ const routes: Routes = [
     component: LoginComponent,
     //canActivate: [AuthoriseGuard],
   },
-  {
-    path: 'themes',
-    component: ThemesComponent,
-    canActivate: [AdminGuard],
-  },
+  //{
+  //  path: 'themes',
+  //  component: ThemesComponent,
+  //  canActivate: [AdminGuard],
+  //},
   //{
   //  path: '**',
   //  redirectTo: 'login'
@@ -64,6 +64,7 @@ const routes: Routes = [
     MatDialogModule,
     MatAutocompleteModule,
     MatChipsModule,
+    MatTabsModule
 
   ],
   providers: [
@@ -72,6 +73,7 @@ const routes: Routes = [
   ],
   entryComponents: [
     AddThemeDialogComponent,
+    ThemesComponent,
   ]
 })
 export class AdminModule { }

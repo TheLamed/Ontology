@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subject } from "rxjs";
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
   selector: 'admin-dashboard',
@@ -13,6 +14,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private _router: Router,
+    private _authService: AuthService,
   ) {
     this._unsubscribe = new Subject<any>();
   }
@@ -24,5 +26,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     
+  }
+
+  logout() {
+    this._authService.logout.next();
   }
 }

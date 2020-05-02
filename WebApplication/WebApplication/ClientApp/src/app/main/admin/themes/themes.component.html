@@ -1,87 +1,79 @@
-<div class="back p-24">
-  <div class="card w-100-p"
-       fxLayout="column" fxLayoutAlign="satrt stretch">
-    <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxLayout="row" fxLayoutAlign="start center">
-        <a mat-icon-button [routerLink]="'/a/dashboard'">
-          <mat-icon>arrow_back</mat-icon>
-        </a>
-        <div class="h ml-52">Теми</div>
-      </div>
-      <button mat-raised-button color="primary"
-              (click)="themeAdd()">
-        Додати Тему
-      </button>
-    </div>
-    <mat-table [dataSource]="dataSource" multiTemplateDataRows>
-      <!-- More -->
-      <ng-container matColumnDef="more">
-        <mat-header-cell *matHeaderCellDef class="w-40"></mat-header-cell>
-        <mat-cell *matCellDef="let element" class="w-40">
-          <button mat-icon-button
-                  (click)="expandedElement = expandedElement === element ? null : element"
-                  [disabled]="element.parents.length == 0">
-            <mat-icon *ngIf="expandedElement == element">expand_less</mat-icon>
-            <mat-icon *ngIf="expandedElement != element">expand_more</mat-icon>
+<div fxLayout="column" fxLayoutAlign="space-between stretch" fxFill>
+  <mat-table [dataSource]="dataSource" multiTemplateDataRows>
+    <!-- More -->
+    <ng-container matColumnDef="more">
+      <mat-header-cell *matHeaderCellDef class="w-40"></mat-header-cell>
+      <mat-cell *matCellDef="let element" class="w-40">
+        <button mat-icon-button
+                (click)="expandedElement = expandedElement === element ? null : element"
+                [disabled]="element.parents.length == 0">
+          <mat-icon *ngIf="expandedElement == element">expand_less</mat-icon>
+          <mat-icon *ngIf="expandedElement != element">expand_more</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Id -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef class="w-60">Id</mat-header-cell>
+      <mat-cell *matCellDef="let element" class="w-60"> {{element.id}} </mat-cell>
+    </ng-container>
+
+    <!-- Name -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Назва</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Count Of Terms -->
+    <ng-container matColumnDef="countOfTerms">
+      <mat-header-cell *matHeaderCellDef>Кількість термінів</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.countOfTerms}} </mat-cell>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef class="w-40"></mat-header-cell>
+      <mat-cell *matCellDef="let element" class="w-40">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="themeDelete(element)">
+            <mat-icon>delete_outline</mat-icon>Видалити
           </button>
-        </mat-cell>
-      </ng-container>
-
-      <!-- Id -->
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef class="w-60">Id</mat-header-cell>
-        <mat-cell *matCellDef="let element" class="w-60"> {{element.id}} </mat-cell>
-      </ng-container>
-
-      <!-- Name -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef>Назва</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-      </ng-container>
-
-      <!-- Count Of Terms -->
-      <ng-container matColumnDef="countOfTerms">
-        <mat-header-cell *matHeaderCellDef>Кількість термінів</mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.countOfTerms}} </mat-cell>
-      </ng-container>
-
-      <!-- Actions -->
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef class="w-40"></mat-header-cell>
-        <mat-cell *matCellDef="let element" class="w-40">
-          <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
+          <button mat-menu-item (click)="themeEdit(element)">
+            <mat-icon>restore_page</mat-icon>Редагувати
           </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="themeDelete(element)">
-              <mat-icon>delete_outline</mat-icon>Видалити
-            </button>
-            <button mat-menu-item (click)="themeEdit(element)">
-              <mat-icon>restore_page</mat-icon>Редагувати
-            </button>
-          </mat-menu>
-        </mat-cell>
-      </ng-container>
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
 
-      <!-- Expanded Detail -->
-      <ng-container matColumnDef="expandedDetail">
-        <mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-          <div class="example-element-detail"
-               [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-            <div class="pl-100 pr-40 py-12">
-              <b>Батьки: </b>
-              <span *ngFor="let parent of element.parents">{{parent.name}}; </span>
-            </div>
+    <!-- Expanded Detail -->
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+        <div class="example-element-detail"
+             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="pl-100 pr-40 py-12">
+            <b>Батьки: </b>
+            <span *ngFor="let parent of element.parents">{{parent.name}}; </span>
           </div>
-        </mat-cell>
-      </ng-container>
+        </div>
+      </mat-cell>
+    </ng-container>
 
-      <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-      <mat-row *matRowDef="let element; columns: columnsToDisplay;"
-               class="example-element-row"
-               [class.example-expanded-row]="expandedElement === element">
-      </mat-row>
-      <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
-    </mat-table>
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let element; columns: columnsToDisplay;"
+             class="example-element-row"
+             [class.example-expanded-row]="expandedElement === element">
+    </mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
+  </mat-table>
+  <div class="header" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button color="primary"
+            (click)="themeAdd()">
+      Додати Тему
+    </button>
   </div>
 </div>
+

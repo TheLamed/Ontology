@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Interfaces.Admin;
 using WebApplication.Models;
+using WebApplication.Models.Entities;
 
 namespace WebApplication.Services.Admin
 {
@@ -33,7 +34,7 @@ namespace WebApplication.Services.Admin
 
         #region ITermService implementation
 
-        public async Task<bool> AddTerm(TermModel model)
+        public async Task<bool> AddTerm(EditTermModel model)
         {
             using (var session = _db.GetSession())
             {
@@ -93,7 +94,7 @@ namespace WebApplication.Services.Admin
             return true;
         }
 
-        public async Task<bool> UpdateTerm(long id, TermModel model)
+        public async Task<bool> UpdateTerm(long id, EditTermModel model)
         {
             using (var session = _db.GetSession())
             {
@@ -112,6 +113,43 @@ namespace WebApplication.Services.Admin
             }
 
             return true;
+        }
+
+        public async Task<PagingList<TermModel>> GetTerms(int pn = 0, int ps = 10, string sort = "asc")
+        {
+            using (var session = _db.GetSession())
+            {
+                var result = await session.RunAsync(
+                    string.Format(_transactions.GetTerm(sort), pn * ps, ps)
+                );
+
+                var list = new List<TermModel>();
+
+                while (await result.FetchAsync())
+                {
+                    var term = new Term(result.Current[0] as INode);
+                    var themes = (result.Current[1] as List<INode>)?
+                        .Select(v => new Theme(v))
+                        .ToList();
+
+                    var model = new TermModel(term, themes);
+                    list.Add(model);
+                }
+
+                var countResult = await session.RunAsync(
+                    _transactions.GetTermCount()
+                );
+                var record = await countResult.SingleAsync();
+                var count = (int)(record.Values.Single().Value);
+
+                return new PagingList<TermModel>()
+                {
+                    Items = list,
+                    PageNumber = pn,
+                    PageSize = ps,
+                    TotalCount = count
+                };
+            }
         }
 
         #endregion

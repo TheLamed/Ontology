@@ -150,3 +150,8 @@ $breakpoints: ( xs: 'screen and (max-width: 599px)', sm: 'screen and (min-width:
   border-radius: 4px;
   @include mat-elevation(2);
 }
+
+//Fixing styles
+admin-dashboard .mat-tab-body-wrapper {
+  height: 100%;
+}

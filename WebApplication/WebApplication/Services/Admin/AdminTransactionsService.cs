@@ -51,7 +51,7 @@ namespace WebApplication.Services.Admin
 
         #region Term
 
-        public string AddTerm(TermModel model)
+        public string AddTerm(EditTermModel model)
         {
             var str = "CREATE (n:Term) " +
                 "SET n.name = $Name " +
@@ -105,6 +105,18 @@ namespace WebApplication.Services.Admin
             return "MATCH (n:Term) " +
                 "WHERE id(n) = {0} " +
                 "DETACH DELETE n ";
+        }
+        public string GetTerm(string sort)
+        {
+            return "MATCH (n:Term) " +
+                "RETURN n AS node, [(n)-- > (t: Theme) | t] AS themes " +
+               $"ORDER BY n.name {(sort == "desc" ? "DESC" : "")}" +
+                "SKIP {0} " +
+                "LIMIT {1}";
+        }
+        public string GetTermCount()
+        {
+            return "MATCH (n:Term) RETURN COUNT(n) AS count";
         }
 
         #endregion

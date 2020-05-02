@@ -1,17 +1,45 @@
-<div class="back">
-  <div class="card m-24 p-12 w-300"
-       fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
-    <a mat-button [routerLink]="'/a/themes'">
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <span>Теми</span>
-        <mat-icon>bookmarks</mat-icon>
-      </div>
-    </a>
-    <a mat-button [routerLink]="'/a/terms'">
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <span>Терміни</span>
-        <mat-icon>extension</mat-icon>
-      </div>
-    </a>
+<div class="back p-24" fxLayout="row" fxLayoutGap="24px">
+
+  <!-- COLUMN 1 -->
+  <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="24px"
+       fxFlex="1 1 300px">
+    <div class="card p-12"
+         fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+      <button mat-button (click)="logout()">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>Вийти</span>
+          <mat-icon>exit_to_app</mat-icon>
+        </div>
+      </button>
+      <!--<a mat-button [routerLink]="'/a/themes'">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>Теми</span>
+          <mat-icon>bookmarks</mat-icon>
+        </div>
+      </a>
+      <a mat-button [routerLink]="'/a/terms'">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>Терміни</span>
+          <mat-icon>extension</mat-icon>
+        </div>
+      </a>-->
+    </div>
   </div>
+
+  <!-- COLUMN 2 -->
+  <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="24px"
+       fxFlex>
+    <div class="card" fxFlex
+         fxLayout="column" fxLayoutAlign="start stretch">
+      <mat-tab-group fxFlex>
+        <mat-tab label="Теми">
+          <admin-themes></admin-themes>
+        </mat-tab>
+        <mat-tab label="Терміни">
+          
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+
 </div>
