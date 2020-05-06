@@ -1,0 +1,51 @@
+<div mat-dialog-title class="w-100-p"
+     fxLayout="row" fxLayoutAlign="space-between center"
+     fxLayoutGap="24px">
+  <div>Керування темами</div>
+  <button mat-icon-button
+          (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div mat-dialog-content
+     fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="8px">
+  <div class="term-name">{{term.name}}</div>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <div>Теми: </div>
+    <mat-chip-list class="ml-8" *ngIf="term.themes.length > 0">
+      <mat-chip *ngFor="let item of term.themes"
+                [removable]="true" (removed)="removeTheme(item)">
+        {{item.value}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+    <div *ngIf="term.themes.length == 0" class="ml-8">
+      <i>Немає тем...</i>
+    </div>
+  </div>
+  <form [formGroup]="form" fxLayout="column" fxLayoutAlign="start stretch">
+    <mat-form-field appearance="outline" *ngIf="!isEdit">
+      <mat-label>Теми</mat-label>
+      <input matInput
+             placeholder="Тема"
+             #themeInput
+             formControlName="theme"
+             [matAutocomplete]="auto"
+             (keyup)="inputKeyPress()">
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let item of filteredThemes | async" [value]="item">
+          {{item.name}}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="form.controls['theme'].hasError('selectValue') || form.controls['theme'].hasError('required')">Виберіть тему</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="addTheme()">
+    Додати
+  </button>
+  <button mat-button color="warn" (click)="close()">
+    Закрити
+  </button>
+</div>

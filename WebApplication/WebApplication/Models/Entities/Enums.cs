@@ -7,7 +7,7 @@ namespace WebApplication.Models.Entities
 {
     public enum Status : long
     {
-        New,
+        Uningexed,
         Indexed,
     }
 }

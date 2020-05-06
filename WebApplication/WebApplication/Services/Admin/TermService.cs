@@ -128,8 +128,8 @@ namespace WebApplication.Services.Admin
                 while (await result.FetchAsync())
                 {
                     var term = new Term(result.Current[0] as INode);
-                    var themes = (result.Current[1] as List<INode>)?
-                        .Select(v => new Theme(v))
+                    var themes = (result.Current[1] as IEnumerable<object>)?
+                        .Select(v => new Theme(v as INode))
                         .ToList();
 
                     var model = new TermModel(term, themes);
@@ -140,7 +140,7 @@ namespace WebApplication.Services.Admin
                     _transactions.GetTermCount()
                 );
                 var record = await countResult.SingleAsync();
-                var count = (int)(record.Values.Single().Value);
+                var count = (long)(record.Values.Single().Value);
 
                 return new PagingList<TermModel>()
                 {

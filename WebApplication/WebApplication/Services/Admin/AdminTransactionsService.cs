@@ -57,7 +57,7 @@ namespace WebApplication.Services.Admin
                 "SET n.name = $Name " +
                 ", n.description = $Description " +
                 ", n.isFullMatch = $IsFullMatch " +
-                $", n.status = {(int)Status.New} ";
+                $", n.status = {(int)Status.Uningexed} ";
 
             if (model.Source != null) 
                 str += ", n.source = $Source ";
@@ -85,7 +85,7 @@ namespace WebApplication.Services.Admin
                 ", n.description = $Description " +
                 ", n.isFullMatch = $IsFullMatch " + 
                 ", n.source = $Source " +
-                $", n.status = {(int)Status.New} " +
+                $", n.status = {(int)Status.Uningexed} " +
                 "RETURN n ";
         }
         public string UpdateTermStatus()
@@ -108,9 +108,16 @@ namespace WebApplication.Services.Admin
         }
         public string GetTerm(string sort)
         {
-            return "MATCH (n:Term) " +
-                "RETURN n AS node, [(n)-- > (t: Theme) | t] AS themes " +
-               $"ORDER BY n.name {(sort == "desc" ? "DESC" : "")}" +
+            var str = "MATCH (n:Term) " +
+                "RETURN n AS node, [(n)-- > (t: Theme) | t] AS themes ";
+            if (!string.IsNullOrEmpty(sort))
+            {
+                if (sort == "desc")
+                    str += $"ORDER BY n.name DESC ";
+                if (sort == "asc")
+                    str += $"ORDER BY n.name ";
+            }
+            return str +
                 "SKIP {0} " +
                 "LIMIT {1}";
         }
@@ -125,7 +132,7 @@ namespace WebApplication.Services.Admin
 
         public string GetUnindexedTerms()
         {
-            return $"MATCH (n:Term) WHERE n.status = {(int)Status.New} RETURN n";
+            return $"MATCH (n:Term) WHERE n.status = {(int)Status.Uningexed} RETURN n";
         }
 
         public string GetOtherTerms()

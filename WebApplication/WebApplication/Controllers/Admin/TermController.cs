@@ -31,6 +31,7 @@ namespace WebApplication.Controllers.Admin
         #region Calls
 
         [HttpPost]
+        [Route("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<bool>> AddTerm([FromBody]EditTermModel model)
@@ -45,6 +46,7 @@ namespace WebApplication.Controllers.Admin
         }
 
         [HttpDelete]
+        [Route("{id:long}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<bool>> DeleteTerm(long id)
         {
@@ -94,7 +96,6 @@ namespace WebApplication.Controllers.Admin
         {
             return Ok(await _termService.GetTerms(pn, ps, sort));
         }
-
 
         #endregion
     }

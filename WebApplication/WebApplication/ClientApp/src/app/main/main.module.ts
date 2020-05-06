@@ -10,6 +10,8 @@ import { AuthService } from "../services/auth.service";
 import { ThemesApiService } from "../services/api/api-themes.service";
 import { ThemesService } from "../services/themes.service";
 import { ConfirmDialogModule } from "./shared/dialogs/confirm-dialog/confirm-dialog.module";
+import { TermsApiService } from "../services/api/api-terms.service";
+import { TermsService } from "../services/term.service";
 
 const routes: Routes = [
   {
@@ -39,9 +41,11 @@ const routes: Routes = [
 
     LoginApiService,
     ThemesApiService,
+    TermsApiService,
 
     AuthService,
     ThemesService,
+    TermsService,
   ],
 })
 export class MainModule { }

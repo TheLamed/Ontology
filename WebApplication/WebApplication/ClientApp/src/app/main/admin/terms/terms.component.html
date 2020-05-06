@@ -1,12 +1,11 @@
 <div fxLayout="column" fxLayoutAlign="space-between stretch" fxFill>
-  <mat-table [dataSource]="dataSource" multiTemplateDataRows>
+  <mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
     <!-- More -->
     <ng-container matColumnDef="more">
       <mat-header-cell *matHeaderCellDef class="w-40"></mat-header-cell>
       <mat-cell *matCellDef="let element" class="w-40">
         <button mat-icon-button
-                (click)="expandedElement = expandedElement === element ? null : element"
-                [disabled]="element.parents.length == 0">
+                (click)="expandedElement = expandedElement === element ? null : element">
           <mat-icon *ngIf="expandedElement == element">expand_less</mat-icon>
           <mat-icon *ngIf="expandedElement != element">expand_more</mat-icon>
         </button>
@@ -21,14 +20,11 @@
 
     <!-- Name -->
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef>Назва</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-    </ng-container>
-
-    <!-- Count Of Terms -->
-    <ng-container matColumnDef="countOfTerms">
-      <mat-header-cell *matHeaderCellDef>Кількість термінів</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.countOfTerms}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Назва</mat-header-cell>
+      <mat-cell *matCellDef="let element"
+                [class.unindexed]="element.status == 0">
+        {{element.name}}
+      </mat-cell>
     </ng-container>
 
     <!-- Actions -->
@@ -39,11 +35,14 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="themeDelete(element)">
+          <button mat-menu-item (click)="deleteTerm(element.id)">
             <mat-icon>delete_outline</mat-icon>Видалити
           </button>
-          <button mat-menu-item (click)="themeEdit(element)">
+          <button mat-menu-item (click)="editTerm(element)">
             <mat-icon>restore_page</mat-icon>Редагувати
+          </button>
+          <button mat-menu-item (click)="editThemes(element)">
+            <mat-icon>bookmarks</mat-icon>Теми
           </button>
         </mat-menu>
       </mat-cell>
@@ -55,8 +54,18 @@
         <div class="example-element-detail"
              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
           <div class="pl-100 pr-40 py-12">
-            <b>Батьки: </b>
-            <span *ngFor="let parent of element.parents">{{parent.name}}; </span>
+            <div>{{element.description}}; </div>
+            <div *ngIf="element.source" class="py-8">
+              <b>Джерело: </b>
+              <span class="elipsis" [innerHTML]="getUrls(element.source)"></span>
+            </div>
+            <div *ngIf="element.themes && element.themes.length > 0" class="py-8"
+                 fxLayout="row" fxLayoutAlign="start center">
+              <div><b>Теми:</b></div>
+              <mat-chip-list class="ml-8" *ngIf="element.themes.length > 0">
+                <mat-chip *ngFor="let theme of element.themes">{{theme.value}}</mat-chip>
+              </mat-chip-list>
+            </div>
           </div>
         </div>
       </mat-cell>
@@ -69,11 +78,17 @@
     </mat-row>
     <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
   </mat-table>
-  <div class="p-12" fxLayout="row" fxLayoutAlign="end center">
-    <button mat-raised-button color="primary"
-            (click)="themeAdd()">
-      Додати Тему
-    </button>
+  <div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50, 100]"
+                   [length]="totalCount"
+                   [pageSize]="pagingParams.ps"
+                   [pageIndex]="pagingParams.pn"></mat-paginator>
+    <div class="p-12" fxLayout="row" fxLayoutAlign="end center">
+      <button mat-raised-button color="primary"
+              (click)="addTerm()">
+        Додати Термін
+      </button>
+    </div>
   </div>
 </div>
 

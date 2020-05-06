@@ -36,7 +36,7 @@ namespace WebApplication.Models
         public TermModel(Term term, IEnumerable<Theme> themes)
             : this(term)
         {
-            Themes = themes.Select(v => new IdValueModel() { Id = v.Id, Value = v.Name }).ToList();
+            Themes = themes?.Select(v => new IdValueModel() { Id = v.Id, Value = v.Name }).ToList();
         }
 
     }

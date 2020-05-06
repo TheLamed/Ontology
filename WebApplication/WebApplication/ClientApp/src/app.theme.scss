@@ -17,6 +17,7 @@ $custom-theme: mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($custom-theme);
 
 $url-color: map-get($accent, 400);
+$url-color-hover: map-get($accent, 200);
 
 
 //media breakpoints
@@ -135,6 +136,12 @@ $breakpoints: ( xs: 'screen and (max-width: 599px)', sm: 'screen and (min-width:
   }
 }
 
+.add-term-dialog {
+  .mat-dialog-container {
+    width: 600px;
+  }
+}
+
 //Components
 .back {
   top: 0;
@@ -149,6 +156,20 @@ $breakpoints: ( xs: 'screen and (max-width: 599px)', sm: 'screen and (min-width:
   background-color: $default-foreground;
   border-radius: 4px;
   @include mat-elevation(2);
+}
+
+.elipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.url {
+  color: $url-color;
+
+  &:hover {
+    color: $url-color-hover;
+  }
 }
 
 //Fixing styles
