@@ -1,0 +1,26 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxFill>
+  <div class="spinner-container"
+       fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner color="accent"
+                 [value]="percent"
+                 [mode]="determinate"
+                 [diameter]="150"
+                 class="my-64">
+    </mat-spinner>
+    <div class="spinner-percent" fxLayoutAlign="center center">
+      <span class="percent-text">{{percent}}</span>
+    </div>
+  </div>
+  <div fxLayout="column" fxLayoutAlign="start start" class="mb-24">
+    <div class="info-text">Кількість термінів: {{totalCount | number:'1.0-1'}}</div>
+    <div class="info-text">Непроіндексовано: {{unindexedCount}}</div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <button mat-raised-button color="primary"
+            [disabled]="inProgress"
+            (click)="startProcessing()">
+      {{ inProgress ? 'Триває індексування' : 'Запустити індексування' }}
+    </button>
+  </div>
+</div>
+

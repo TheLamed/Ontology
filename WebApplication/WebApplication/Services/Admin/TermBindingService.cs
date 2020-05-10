@@ -21,8 +21,10 @@ namespace WebApplication.Services.Admin
         private ITermService _termService;
 
         private bool _isProcessing;
-        private int _count;
-        private int _indexed;
+        private long _unindexedCount;
+        private long _countForIndex;
+        private long _countForIndexDone;
+        private long _indexedCount;
 
         private Regex seperators;
 
@@ -44,8 +46,10 @@ namespace WebApplication.Services.Admin
             _termService = termService;
 
             _isProcessing = false;
-            _count = 0;
-            _indexed = 0;
+            _unindexedCount = 0;
+            _indexedCount = 0;
+            _countForIndex = 0;
+            _countForIndexDone = 0;
 
             seperators = new Regex("[.,?!:;'\"_@#$%^&*=+()\\[\\]{}~\t\n-]");
         }
@@ -56,12 +60,18 @@ namespace WebApplication.Services.Admin
 
         public async Task StartProcessing()
         {
+            if (_isProcessing) return;
+
             _isProcessing = true;
-            _count = 0;
-            _indexed = 0;
+            _unindexedCount = 0;
+            _indexedCount = 0;
 
             using (var session = _db.GetSession())
             {
+                var countResult = await session.RunAsync(_transactions.GetUnindexedTermsCount());
+                var countRecord = await countResult.SingleAsync();
+                _unindexedCount = (long)(countRecord.Values.Single().Value);
+
                 var result = await session.RunAsync(_transactions.GetUnindexedTerms());
                 
                 while (await result.FetchAsync())
@@ -72,15 +82,56 @@ namespace WebApplication.Services.Admin
                     term.Status = Status.Indexed;
                     await session.RunAsync(string.Format(_transactions.UpdateTermStatus(), term.Id, (int)Status.Indexed));
 
-                    _indexed++;
+                    _indexedCount++;
                 }
             }
+
+            _isProcessing = false;
+            _unindexedCount = 0;
+            _indexedCount = 0;
+            _countForIndex = 1;
+            _countForIndexDone = 0;
         }
+
+        public async Task<BindingInfoModel> GetBindingInfo()
+        {
+            var info = new BindingInfoModel();
+
+            info.InProgress = _isProcessing;
+
+            using (var session = _db.GetSession())
+            {
+                var countResult = await session.RunAsync(_transactions.GetTotalTermsCount());
+                var countRecord = await countResult.SingleAsync();
+                info.TotalCount = (long)(countRecord.Values.Single().Value);
+
+                var unindexedResult = await session.RunAsync(_transactions.GetUnindexedTermsCount());
+                var unindexedRecord = await unindexedResult.SingleAsync();
+                info.UnindexedCount = (long)(unindexedRecord.Values.Single().Value);
+            }
+
+            if (_isProcessing)
+                info.Percent = ((1.0 * _indexedCount * _countForIndex + _countForIndexDone * _countForIndex) / (1.0 * _unindexedCount * _countForIndex)) * 100;
+            else
+                info.Percent = 100 - (1.0 * info.UnindexedCount / info.TotalCount * 100);
+
+            return info;
+        }
+
+        #endregion
+
+        #region Private Members
 
         private async Task Index(Term term)
         {
+            _countForIndexDone = 0;
+
             using (var session = _db.GetSession())
             {
+                var countResult = await session.RunAsync(string.Format(_transactions.GetOtherTermsCount(), term.Id));
+                var countRecord = await countResult.SingleAsync();
+                _countForIndex = (long)(countRecord.Values.Single().Value);
+
                 var result = await session.RunAsync(string.Format(_transactions.GetOtherTerms(), term.Id));
 
                 while (await result.FetchAsync())
@@ -100,6 +151,8 @@ namespace WebApplication.Services.Admin
                         if (itemInTerm)
                             await session.RunAsync(string.Format(_transactions.AddUsed(), term.Id, item.Id));
                     }
+
+                    _countForIndex++;
                 }
             }
         }

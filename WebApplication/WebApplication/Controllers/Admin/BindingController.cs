@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Interfaces.Admin;
+using WebApplication.Models;
 
 namespace WebApplication.Controllers.Admin
 {
@@ -36,6 +37,14 @@ namespace WebApplication.Controllers.Admin
         {
             _bindingService.StartProcessing();
             return Ok(true);
+        }
+
+        [HttpGet]
+        [Route("info")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<BindingInfoModel>> GetInfo()
+        {
+            return Ok(await _bindingService.GetBindingInfo());
         }
 
         #endregion

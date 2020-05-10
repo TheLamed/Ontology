@@ -134,10 +134,25 @@ namespace WebApplication.Services.Admin
         {
             return $"MATCH (n:Term) WHERE n.status = {(int)Status.Uningexed} RETURN n";
         }
+        
+        public string GetTotalTermsCount()
+        {
+            return $"MATCH (n:Term) RETURN COUNT(n)";
+        }
+
+        public string GetUnindexedTermsCount()
+        {
+            return $"MATCH (n:Term) WHERE n.status = {(int)Status.Uningexed} RETURN COUNT(n)";
+        }
 
         public string GetOtherTerms()
         {
             return "MATCH (n:Term) WHERE id(n) <> {0} RETURN n";
+        }
+
+        public string GetOtherTermsCount()
+        {
+            return "MATCH (n:Term) WHERE id(n) <> {0} RETURN COUNT(n)";
         }
 
         public string AddUsed()

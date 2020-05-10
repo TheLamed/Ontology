@@ -1,0 +1,21 @@
+@import 'src/app.theme.scss';
+
+.spinner-container {
+  position: relative;
+
+  .spinner-percent {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+.info-text {
+  font-size: 24px;
+}
+
+.percent-text {
+  font-size: 50px;
+}
