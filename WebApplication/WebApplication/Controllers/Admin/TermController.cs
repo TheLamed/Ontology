@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers.Admin
 {
+    [Authorize]
     [ApiController]
     [Route("api/term")]
     public class TermController : ControllerBase

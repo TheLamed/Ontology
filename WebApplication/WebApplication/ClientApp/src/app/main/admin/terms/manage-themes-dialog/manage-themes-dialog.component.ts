@@ -103,7 +103,7 @@ export class ManageThemesDialogComponent implements OnInit, OnDestroy {
   addTheme() {
     if (!this.form.valid) {
       this._usabilities.touchForm(this.form);
-      this._dialogService.showSnackBar('Перевірте форму!');
+      this._dialogService.showSnackBar("РџРµСЂРµРІС–СЂС‚Рµ С„РѕСЂРјСѓ!");
       return;
     }
 

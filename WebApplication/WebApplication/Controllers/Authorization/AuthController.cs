@@ -35,7 +35,7 @@ namespace WebApplication.Controllers.Authorization
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AuthorizationResponse>> AddTheme([FromBody]LoginModel model)
+        public async Task<ActionResult<AuthorizationResponse>> Login([FromBody]LoginModel model)
         {
             if (model == null)
                 return BadRequest("Model is empty");
