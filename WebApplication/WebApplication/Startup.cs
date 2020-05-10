@@ -71,6 +71,8 @@ namespace WebApplication
             services.AddTransient<IWordComparisonService, JaroWinklerWordComparisonService>();
             services.AddTransient<IThemeService, ThemeService>();
             services.AddTransient<ITermService, TermService>();
+            services.AddTransient<IContentService, ContentService>();
+            services.AddTransient<ContentTransactionsService>();
 
             services.AddSingleton<ITermBindingService, TermBindingService>();
         }

@@ -109,7 +109,7 @@ namespace WebApplication.Services.Admin
         public string GetTerm(string sort)
         {
             var str = "MATCH (n:Term) " +
-                "RETURN n AS node, [(n)-- > (t: Theme) | t] AS themes ";
+                "RETURN n AS node, [(n)-->(t:Theme) | t] AS themes ";
             if (!string.IsNullOrEmpty(sort))
             {
                 if (sort == "desc")
