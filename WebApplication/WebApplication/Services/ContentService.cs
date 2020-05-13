@@ -95,6 +95,88 @@ namespace WebApplication.Services
             }
         }
 
+        public async Task<PagingList<TermContentModel>> GetContent(int pn = 0, int ps = 10, string sort = "asc", string name = null, string themes = null)
+        {
+            using (var session = _db.GetSession())
+            {
+                IEnumerable<long> themeIds = null;
+                if(themes != null)
+                {
+                    themeIds = themes.Split(',')
+                        .SelectMany(v =>
+                        {
+                            try
+                            {
+                                var id = Convert.ToInt64(v);
+                                return new List<long>() { id };
+                            }
+                            catch (Exception)
+                            {
+                                return new List<long>();
+                            }
+                        });
+                }
+
+                var result = await session.RunAsync(
+                    string.Format(_transactions.GetContent(sort, name, themeIds), pn, ps),
+                    new { Name = name }
+                );
+
+                var list = new List<TermContentModel>();
+
+                while (await result.FetchAsync())
+                {
+                    var term = new Term(result.Current[0] as INode);
+                    var themesList = (result.Current[1] as IEnumerable<object>)?
+                        .Select(v => new Theme(v as INode))
+                        .ToList();
+
+                    var model = new TermContentModel(term, themesList);
+                    list.Add(model);
+                }
+
+                var countResult = await session.RunAsync(
+                    _transactions.GetContentCount(sort, name, themeIds),
+                    new { Name = name }
+                );
+                var countRecord = await countResult.SingleAsync();
+                var totalCount = (long)(countRecord.Values.Single().Value);
+
+                return new PagingList<TermContentModel>()
+                {
+                    Items = list,
+                    TotalCount = totalCount,
+                    PageNumber = pn,
+                    PageSize = ps
+                };
+            }
+        }
+
+        public async Task<List<TermContentModel>> GetRandomTerms(int count = 10)
+        {
+            using (var session = _db.GetSession())
+            {
+                var result = await session.RunAsync(
+                    string.Format(_transactions.GetRandomTerms(), count)
+                );
+
+                var list = new List<TermContentModel>();
+
+                while (await result.FetchAsync())
+                {
+                    var term = new Term(result.Current[0] as INode);
+                    var themes = (result.Current[1] as IEnumerable<object>)?
+                        .Select(v => new Theme(v as INode))
+                        .ToList();
+
+                    var model = new TermContentModel(term, themes);
+                    list.Add(model);
+                }
+
+                return list;
+            }
+        }
+
         #endregion
 
         #region Private Members
