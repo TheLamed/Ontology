@@ -1,0 +1,25 @@
+<div class="card pb-0 p-12"
+     fxLayout="column" fxLayoutAlign="start stretch">
+  <a>
+    <div class="term-header elipsis">
+      {{term.name}}
+    </div>
+  </a>
+  <div class="elipsis-block mt-8" fxFlex>
+    {{term.description}}
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center"
+       class="mt-8 h-48">
+    <div><b>Теми: </b></div>
+    <div *ngIf="term.themes.length == 0"
+         class="ml-8">
+       Немає тем...
+    </div>
+
+    <mat-chip-list class="ml-8 mat-chip-scrolable" *ngIf="term.themes.length > 0" >
+      <mat-chip *ngFor="let theme of getThemes(term.themes, 3)">
+        {{theme.value}}
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+</div>

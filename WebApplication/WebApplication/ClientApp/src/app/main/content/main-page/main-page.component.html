@@ -1,0 +1,102 @@
+<div class="back p-24 scrolling-container"
+     fxLayout="row" fxLayoutAlign="center start">
+  <div class="main-page-width"
+       fxLayout="column" fxLayoutAlign="start stretch">
+
+    <div class="card p-12"
+         fxLayout="column" fxLayoutAlign="start stretch">
+      <find-terms></find-terms>
+    </div>
+
+    <div class="header-text p-12"
+         fxLayout="row" fxLayoutAlign="space-between center">
+      <div *ngIf="isSearch"><b>Знайдені терміни:</b></div>
+      <div *ngIf="!isSearch"><b>Випадкові терміни:</b></div>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-icon-button (click)="isSearch = false"
+                *ngIf="isSearch"
+                matTooltip="Очистити пошук">
+          <mat-icon>clear</mat-icon>
+        </button>
+        <button mat-icon-button (click)="reloadRandomTerms()"
+                *ngIf="!isSearch"
+                matTooltip="Обновити">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-icon-button (click)="isMosaic = !isMosaic"
+                matTooltip="{{isMosaic ? 'Мозаїка' : 'Список'}}">
+          <mat-icon *ngIf="!isMosaic">view_list</mat-icon>
+          <mat-icon *ngIf="isMosaic">view_module</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="!isSearch">
+      <div *ngIf="isMosaic"
+           fxLayout="row wrap"
+           fxLayoutAlign="space-between start"
+           [@listAnimation]="randomTerms.length">
+
+        <div *ngFor="let item of randomTerms"
+             fxFlex="1 1 32.5"
+             fxFlex.lt-md="1 1 49"
+             fxFlex.xs="1 1 100"
+             class="mb-12">
+          <term-content [term]="item"></term-content>
+        </div>
+
+      </div>
+
+      <div *ngIf="!isMosaic"
+           fxLayout="column" fxLayoutGap="12px"
+           fxLayoutAlign="start stretch"
+           [@listAnimation]="randomTerms.length">
+
+        <div *ngFor="let item of randomTerms">
+          <term-content [term]="item"></term-content>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="isSearch">
+      <div *ngIf="isMosaic"
+           fxLayout="row wrap"
+           fxLayoutAlign="space-between start"
+           [@listAnimation]="searchTerms.length">
+
+        <div *ngFor="let item of searchTerms"
+             fxFlex="1 1 32.5"
+             fxFlex.lt-md="1 1 49"
+             fxFlex.xs="1 1 100"
+             class="mb-12">
+          <term-content [term]="item"></term-content>
+        </div>
+
+      </div>
+
+      <div *ngIf="!isMosaic"
+           fxLayout="column" fxLayoutGap="12px"
+           fxLayoutAlign="start stretch"
+           [@listAnimation]="searchTerms.length">
+
+        <div *ngFor="let item of searchTerms">
+          <term-content [term]="item"></term-content>
+        </div>
+
+      </div>
+
+      <div class="card px-12"
+           [class.mt-12]="!isMosaic"
+           fxLayout="row" fxLayoutAlign="end center">
+        <mat-paginator [length]="totalCount"
+                       [pageSize]="request.pageSize"
+                       [pageSizeOptions]="[9, 30, 60, 99]"
+                       (page)="paginatorChange($event)">
+        </mat-paginator>
+      </div>
+
+    </div>
+
+  </div>
+</div>

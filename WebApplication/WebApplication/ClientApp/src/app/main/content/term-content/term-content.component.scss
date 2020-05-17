@@ -1,0 +1,16 @@
+@import 'src/app.theme.scss';
+
+.elipsis-block {
+  height: 4.8em;
+  min-height: 4.8em;
+  max-height: 4.8em;
+  line-height: 1.2em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.term-header{
+  font-weight: bold;
+}

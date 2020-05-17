@@ -39,14 +39,20 @@
     <None Remove="ClientApp\src\app\main\admin\terms\terms.component.ts" />
     <None Remove="ClientApp\src\app\main\admin\themes\add-theme-dialog\add-theme-dialog.component.ts" />
     <None Remove="ClientApp\src\app\main\admin\themes\themes.component.ts" />
+    <None Remove="ClientApp\src\app\main\content\content.module.ts" />
+    <None Remove="ClientApp\src\app\main\content\find\find.component.ts" />
+    <None Remove="ClientApp\src\app\main\content\main-page\main-page.component.ts" />
+    <None Remove="ClientApp\src\app\main\content\term-content\term-content.component.ts" />
     <None Remove="ClientApp\src\app\main\main.module.ts" />
     <None Remove="ClientApp\src\app\main\shared\dialogs\confirm-dialog\confirm-dialog.component.ts" />
     <None Remove="ClientApp\src\app\main\shared\dialogs\confirm-dialog\confirm-dialog.module.ts" />
+    <None Remove="ClientApp\src\app\services\api\api-content.service.ts" />
     <None Remove="ClientApp\src\app\services\api\api-information.service.ts" />
     <None Remove="ClientApp\src\app\services\api\api-login.service.ts" />
     <None Remove="ClientApp\src\app\services\api\api-terms.service.ts" />
     <None Remove="ClientApp\src\app\services\api\api-themes.service.ts" />
     <None Remove="ClientApp\src\app\services\auth.service.ts" />
+    <None Remove="ClientApp\src\app\services\content.service.ts" />
     <None Remove="ClientApp\src\app\services\dialog.service.ts" />
     <None Remove="ClientApp\src\app\services\information.service.ts" />
     <None Remove="ClientApp\src\app\services\term.service.ts" />
@@ -54,6 +60,11 @@
     <None Remove="ClientApp\src\app\services\usabilities.service.ts" />
     <None Remove="ClientApp\src\decorators\api.decorator.ts" />
     <None Remove="ClientApp\src\models\api-response.model.ts" />
+    <None Remove="ClientApp\src\models\content\get-content-request.model.ts" />
+    <None Remove="ClientApp\src\models\content\term-content.model.ts" />
+    <None Remove="ClientApp\src\models\content\term-simple.model.ts" />
+    <None Remove="ClientApp\src\models\content\term-view.model.ts" />
+    <None Remove="ClientApp\src\models\id-request.model.ts" />
     <None Remove="ClientApp\src\models\id-value.model.ts" />
     <None Remove="ClientApp\src\models\login\login-request.model.ts" />
     <None Remove="ClientApp\src\models\login\login-response.model.ts" />
@@ -92,10 +103,25 @@
     <TypeScriptCompile Include="ClientApp\src\app\main\admin\themes\themes.component.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\main\content\content.module.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\main\content\find\find.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\main\content\main-page\main-page.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\main\content\term-content\term-content.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\main\main.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\main\shared\dialogs\confirm-dialog\confirm-dialog.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\main\shared\dialogs\confirm-dialog\confirm-dialog.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api\api-information.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\services\api\api-content.service.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\services\api\api-terms.service.ts" />
@@ -104,6 +130,7 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\services\api\api-login.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\content.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\dialog.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\information.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\term.service.ts" />
@@ -111,6 +138,11 @@
     <TypeScriptCompile Include="ClientApp\src\app\services\usabilities.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\decorators\api.decorator.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\api-response.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\content\get-content-request.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\content\term-content.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\content\term-simple.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\content\term-view.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\id-request.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\id-value.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\login\login-request.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\login\login-response.model.ts" />

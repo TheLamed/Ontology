@@ -1,0 +1,9 @@
+@import 'src/app.theme.scss';
+
+.expanded-container {
+  overflow: hidden;
+}
+
+.color-accent {
+  background-color: rgba($url-color, 0.12);
+}

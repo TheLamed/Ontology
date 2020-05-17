@@ -177,6 +177,34 @@ namespace WebApplication.Services
             }
         }
 
+        public async Task<List<IdValueModel>> GetThemes()
+        {
+            using (var session = _db.GetSession())
+            {
+                var result = await session.RunAsync(
+                    _transactions.GetThemes()
+                );
+
+                var list = new List<IdValueModel>();
+
+                while (await result.FetchAsync())
+                {
+                    var theme = new Theme(result.Current[0] as INode);
+
+                    var model = new IdValueModel()
+                    {
+                        Id = theme.Id,
+                        Value = theme.Name
+                    };
+
+                    list.Add(model);
+                }
+
+                return list;
+            }
+        }
+
+
         #endregion
 
         #region Private Members
@@ -198,9 +226,17 @@ namespace WebApplication.Services
                 {
                     var word = string.Join(" ", description.Skip(i).Take(length));
 
-                    var value = _wordComparison.Compare(item.Name, word);
-                    if (_wordComparison.IsSatisfy(value))
-                        words.Add(word);
+                    if (item.IsFullMatch)
+                    {
+                        if(item.Name == word)
+                            words.Add(word);
+                    }
+                    else
+                    {
+                        var value = _wordComparison.Compare(item.Name, word);
+                        if (_wordComparison.IsSatisfy(value))
+                            words.Add(word);
+                    }
                 }
 
                 foreach (var word in words)

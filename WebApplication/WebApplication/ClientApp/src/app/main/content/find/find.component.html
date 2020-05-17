@@ -1,0 +1,100 @@
+<form fxLayout="column" fxLayoutAlign="start stretch"
+      [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-form-field appearance="outline" fxFlex
+                    class="mat-form-field-no-error">
+      <mat-label>Термін</mat-label>
+      <input matInput
+             formControlName="name"
+             placeholder="Назва">
+      <button mat-icon-button matPrefix
+              type="button"
+              matTooltip="Знайти"
+              (click)="find()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-icon-button class="ml-12"
+            type="button"
+            matTooltip="Більше"
+            (click)="moreOpened = !moreOpened">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+  </div>
+
+  <div [@collapsable]="moreOpened ? 'expanded' : 'collapsed'"
+       class="expanded-container"
+       fxLayout="column" fxLayoutAlign="start stretch">
+
+    <div fxLayout="row" fxLayoutAlign="start center" class="mt-12">
+      <mat-form-field appearance="outline" fxFlex
+                      class="mat-form-field-no-error">
+        <mat-label>Теми</mat-label>
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let item of themes"
+                    [selectable]="selectable"
+                    [removable]="removable"
+                    (removed)="remove(item)">
+            {{item.value}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Назва"
+                 #themeInput
+                 formControlName="theme"
+                 [matAutocomplete]="auto"
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <button mat-icon-button matPrefix
+                type="button">
+          <mat-icon>bookmarks</mat-icon>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let item of filteredThemes | async" [value]="item">
+            {{item.value}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div class="ml-12">
+        <button mat-icon-button [matMenuTriggerFor]="menu"
+                type="button"
+                matTooltip="Сортувати">
+          <mat-icon>sort_by_alpha</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [class.color-accent]="request.sort == ''"
+                  type="button"
+                  (click)="setSort('')">
+            <mat-icon>close</mat-icon>
+            <span>Без сортування</span>
+          </button>
+          <button mat-menu-item [class.color-accent]="request.sort == 'asc'"
+                  type="button"
+                  (click)="setSort('asc')">
+            <mat-icon>arrow_upward</mat-icon>
+            <span>A-Z</span>
+          </button>
+          <button mat-menu-item [class.color-accent]="request.sort == 'desc'"
+                  type="button"
+                  (click)="setSort('desc')">
+            <mat-icon>arrow_downward</mat-icon>
+            <span>Z-A</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="end center" class="mt-12">
+      <button mat-raised-button color="primary"
+              class="mr-62"
+              (click)="find()">
+        <mat-icon>search</mat-icon>
+        <span class="ml-8">Пошук</span>
+      </button>
+    </div>
+
+  </div>
+
+</form>

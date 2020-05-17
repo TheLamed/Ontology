@@ -19,36 +19,41 @@ namespace WebApplication.Services
             return "MATCH (n:Term) " +
                 "WITH n, rand() AS r " +
                 "ORDER BY r " +
-                "RETURN n AS term, [(n)-->(t:Theme) | t] AS themes" +
+                "RETURN n AS term, [(n)-->(t:Theme) | t] AS themes " +
                 "LIMIT {0}";
         }
 
         public string GetContent(string sort, string name, IEnumerable<long> themes)
         {
-            var str = "MATCH (n:Term)";
+            var str = "MATCH (t:Term)";
 
             var isThemes = false;
             if(themes != null && themes.Count() > 0)
             {
                 isThemes = true;
-                str += "-->(m:Theme) " +
-                    $"WHERE id(m) in [{string.Join(", ", themes)}] ";
+
+                str = $"WITH [{string.Join(", ", themes)}] as inputThemes " + str;
+
+                str += "-->(th:Theme) " +
+                   $"WHERE id(th) IN inputThemes " +
+                    "WITH t, SIZE(inputThemes) as inputCnt, COUNT(DISTINCT th) AS matchedCnt " +
+                    "WHERE inputCnt = matchedCnt ";
             }
 
             if(name != null)
                 if (isThemes)
-                    str += "AND n.name CONTAINS $Name ";
+                    str += "AND t.name CONTAINS $Name ";
                 else
-                    str += "WHERE n.name CONTAINS $Name ";
+                    str += "WHERE t.name CONTAINS $Name ";
 
-            str += "RETURN n AS node, [(n)-->(t:Theme) | t] AS themes ";
+            str += "RETURN t AS node, [(t)-->(m:Theme) | m] AS themes ";
 
             if (!string.IsNullOrEmpty(sort))
             {
                 if (sort == "desc")
-                    str += $"ORDER BY n.name DESC ";
+                    str += $"ORDER BY t.name DESC ";
                 if (sort == "asc")
-                    str += $"ORDER BY n.name ";
+                    str += $"ORDER BY t.name ";
             }
 
             return str +
@@ -58,33 +63,33 @@ namespace WebApplication.Services
 
         public string GetContentCount(string sort, string name, IEnumerable<long> themes)
         {
-            var str = "MATCH (n:Term)";
+            var str = "MATCH (t:Term)";
 
             var isThemes = false;
             if (themes != null && themes.Count() > 0)
             {
                 isThemes = true;
-                str += "-->(m:Theme) " +
-                    $"WHERE id(m) in [{string.Join(", ", themes)}] ";
+
+                str = $"WITH [{string.Join(", ", themes)}] as inputThemes " + str;
+
+                str += "-->(th:Theme) " +
+                   $"WHERE id(th) IN inputThemes " +
+                    "WITH t, SIZE(inputThemes) as inputCnt, COUNT(DISTINCT th) AS matchedCnt " +
+                    "WHERE inputCnt = matchedCnt ";
             }
 
             if (name != null)
                 if (isThemes)
-                    str += "AND n.name CONTAINS $Name ";
+                    str += "AND t.name CONTAINS $Name ";
                 else
-                    str += "WHERE n.name CONTAINS $Name ";
+                    str += "WHERE t.name CONTAINS $Name ";
 
-            return str + "RETURN COUNT(n) AS count ";
+            return str + "RETURN COUNT(t) AS count ";
         }
 
-        //public string GetWhereName()
-        //{
-        //    return "WHERE n.name CONTAINS $Name ";
-        //}
-
-        //public string GetWhereThemes(IEnumerable<long> themes)
-        //{
-        //    return "WHERE (n)-->() ";
-        //}
+        public string GetThemes()
+        {
+            return "MATCH (n:Theme) RETURN n";
+        }
     }
 }

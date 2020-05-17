@@ -152,6 +152,11 @@ $breakpoints: ( xs: 'screen and (max-width: 599px)', sm: 'screen and (min-width:
   background-color: mat-color($primary, darker);
 }
 
+.main-page-width {
+  width: 100%;
+  max-width: 1012px !important;
+}
+
 .card {
   background-color: $default-foreground;
   border-radius: 4px;
@@ -172,7 +177,29 @@ $breakpoints: ( xs: 'screen and (max-width: 599px)', sm: 'screen and (min-width:
   }
 }
 
+.mat-chip-scrolable {
+  .mat-chip-list-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+
+    .mat-chip {
+      flex: 0 0 auto;
+    }
+  }
+}
+
+.scrolling-container {
+  overflow: auto;
+}
+
 //Fixing styles
 admin-dashboard .mat-tab-body-wrapper {
   height: 100%;
+}
+
+.mat-form-field-no-error {
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
 }
