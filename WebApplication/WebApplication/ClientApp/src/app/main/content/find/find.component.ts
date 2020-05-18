@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef, Output, EventEmitter } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subject, Observable } from "rxjs";
 import { ContentService } from "../../../services/content.service";
@@ -10,6 +10,8 @@ import { MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent } from
 import { takeUntil, startWith, map } from "rxjs/operators";
 import { IdValueModel } from "../../../../models/id-value.model";
 import { GetContentRequest } from "../../../../models/content/get-content-request.model";
+import { PagingList } from "../../../../models/paging-list.model";
+import { TermContentModel } from "../../../../models/content/term-content.model";
 
 @Component({
   selector: 'find-terms',
@@ -24,6 +26,9 @@ import { GetContentRequest } from "../../../../models/content/get-content-reques
   ],
 })
 export class FindComponent implements OnInit, OnDestroy {
+
+  @Output()
+  onFind: EventEmitter<any>;
 
   form: FormGroup;
 
@@ -50,6 +55,8 @@ export class FindComponent implements OnInit, OnDestroy {
     private _contentService: ContentService,
     private _formBuilder: FormBuilder,
   ) {
+    this.onFind = new EventEmitter();
+
     this._unsubscribe = new Subject<any>();
   }
 
@@ -107,8 +114,14 @@ export class FindComponent implements OnInit, OnDestroy {
     this.request.themes = this.themes.map(v => v.id).join(",");
     this.request.pn = 0;
 
-    this._contentService.onContentChanged.next([]);
+    let tmp = new PagingList<TermContentModel>();
+    tmp.items = [];
+    tmp.totalCount = 0;
+
+    this._contentService.onContentChanged.next(tmp);
     this._contentService.getContent.next(this.request);
+
+    this.onFind.emit();
   }
 
   setSort(sort: string) {

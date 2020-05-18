@@ -6,6 +6,8 @@ import { TermContentModel } from "../../models/content/term-content.model";
 import { GetContentRequest } from "../../models/content/get-content-request.model";
 import { PagingList } from "../../models/paging-list.model";
 import { IdValueModel } from "../../models/id-value.model";
+import { IdRequest } from "../../models/id-request.model";
+import { TermViewModel, TERM_VIEW_404, TERM_VIEW_LOADING } from "../../models/content/term-view.model";
 
 @Injectable()
 export class ContentService {
@@ -13,11 +15,13 @@ export class ContentService {
   getRandomTerms: Subject<number>;
   getContent: Subject<GetContentRequest>;
   getThemes: Subject<any>;
+  viewTerm: Subject<IdRequest>;
 
   onSearch: BehaviorSubject<boolean>;
   onRandomTermsChanged: BehaviorSubject<TermContentModel[]>;
   onThemesChanged: BehaviorSubject<IdValueModel[]>;
   onContentChanged: BehaviorSubject<PagingList<TermContentModel>>;
+  onViewTermChanged: BehaviorSubject<TermViewModel>;
 
   request: GetContentRequest;
 
@@ -28,8 +32,10 @@ export class ContentService {
     this.getRandomTerms = new Subject();
     this.getContent = new Subject();
     this.getThemes = new Subject();
+    this.viewTerm = new Subject();
 
     this.onSearch = new BehaviorSubject(false);
+    this.onViewTermChanged = new BehaviorSubject(TERM_VIEW_LOADING);
     this.onRandomTermsChanged = new BehaviorSubject([]);
     this.onThemesChanged = new BehaviorSubject([]);
     this.onContentChanged = new BehaviorSubject(new PagingList<TermContentModel>());
@@ -44,6 +50,7 @@ export class ContentService {
 
     this.getRandomTerms.subscribe(request => this.GetRandomTerms(request));
     this.getThemes.subscribe(request => this.GetThemes());
+    this.viewTerm.subscribe(request => this.ViewTerm(request));
     this.getContent.subscribe(request => {
       if (request != null)
         this.request = request;
@@ -73,6 +80,20 @@ export class ContentService {
     let response = await this._apiService.GetThemes();
     if (response.success) {
       this.onThemesChanged.next(response.model);
+    }
+  }
+
+  private async ViewTerm(request: IdRequest) {
+    let response = await this._apiService.ViewTerm(request);
+
+    if (response.success) {
+      this.onViewTermChanged.next(response.model);
+      return;
+    }
+
+    if (response.status == 404) {
+      this.onViewTermChanged.next(TERM_VIEW_404);
+      return;
     }
   }
 

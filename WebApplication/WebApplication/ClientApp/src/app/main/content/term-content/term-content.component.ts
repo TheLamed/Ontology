@@ -18,6 +18,9 @@ export class TermContentComponent implements OnInit {
   @Input()
   term: TermContentModel;
 
+  @Input()
+  showThemes: boolean;
+
   constructor(
     private _contentService: ContentService,
     private _usabilities: UsabilitiesService,
@@ -26,17 +29,10 @@ export class TermContentComponent implements OnInit {
 
   ngOnInit() {
 
-  }
-
-  getThemes(list: IdValueModel[], count: number) {
-    let output = list.slice(0, count);
-
-    if (list.length > count) {
-      output.pop();
-      output.push({ id: null, value: '...' } as IdValueModel);
+    if (this.showThemes == null) {
+      this.showThemes = true;
     }
 
-    return output;
   }
 
 }

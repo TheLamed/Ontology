@@ -11,6 +11,11 @@
   -webkit-box-orient: vertical;
 }
 
-.term-header{
+.term-header {
   font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    color: $url-color;
+  }
 }

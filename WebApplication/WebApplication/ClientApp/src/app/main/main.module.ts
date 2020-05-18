@@ -49,13 +49,17 @@ export function getUkrainianPaginatorIntl() {
 
 const routes: Routes = [
   {
+    path: 'a',
+    loadChildren: './admin/admin.module#AdminModule',
+  },
+  {
     path: '',
     loadChildren: './content/content.module#ContentModule',
   },
   {
-    path: 'a',
-    loadChildren: './admin/admin.module#AdminModule',
-  }
+    path: '**',
+    redirectTo: ''
+  },
 ]
 
 @NgModule({

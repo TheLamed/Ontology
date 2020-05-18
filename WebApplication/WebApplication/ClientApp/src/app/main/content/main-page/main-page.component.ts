@@ -7,6 +7,7 @@ import { takeUntil } from "rxjs/operators";
 import { TermContentModel } from "../../../../models/content/term-content.model";
 import { GetContentRequest } from "../../../../models/content/get-content-request.model";
 import { PageEvent } from "@angular/material";
+import { setCookie, getCookie } from "../../shared/shared.functions";
 
 @Component({
   selector: 'main-page',
@@ -26,7 +27,19 @@ import { PageEvent } from "@angular/material";
 export class MainPageComponent implements OnInit, OnDestroy {
 
   isSearch: boolean;
-  isMosaic: boolean = true;
+
+  set isMosaic(value: boolean) {
+    setCookie('isMosaic', value ? 'true' : 'false');
+  }
+
+  get isMosaic(): boolean {
+    let ism = getCookie('isMosaic');
+
+    if (ism == 'false')
+      return false;
+    else
+      return true;
+  }
 
   randomTerms: TermContentModel[] = [];
   searchTerms: TermContentModel[] = [];

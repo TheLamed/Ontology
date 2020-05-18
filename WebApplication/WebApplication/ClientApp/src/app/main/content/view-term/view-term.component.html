@@ -1,0 +1,141 @@
+<div class="back p-24 scrolling-container"
+     fxLayout="row" fxLayoutAlign="center start">
+  <div class="main-page-width"
+       fxLayout="column" fxLayoutAlign="start stretch">
+
+    <div class="card p-12"
+         fxLayout="column" fxLayoutAlign="start stretch">
+      <find-terms (onFind)="onFind()"></find-terms>
+    </div>
+
+    <div class="header-text p-12"
+         fxLayout="row" fxLayoutAlign="space-between center">
+      <div><b>Термін:</b></div>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <a mat-icon-button [routerLink]="['']"
+           matTooltip="На головну">
+          <mat-icon>reply</mat-icon>
+        </a>
+      </div>
+    </div>
+
+    <div *ngIf="term.isLoading"
+         class="card p-12 h-200"
+         fxLayout="column" fxLayoutAlign="center center">
+      <mat-spinner color="primary"></mat-spinner>
+    </div>
+
+    <div *ngIf="term.is404"
+         class="card p-12 h-200"
+         fxLayout="column" fxLayoutAlign="center center">
+      <h2>404</h2>
+      <h4>Термін не знайдено</h4>
+    </div>
+
+    <div *ngIf="!term.is404 && !term.isLoading"
+         class="card px-24 pt-24 pb-12"
+         fxLayout="column" fxLayoutAlign="start stretch">
+
+      <h4 class="m-0">
+        {{term.name}}
+      </h4>
+
+      <div class="mt-8">
+        {{getDescription()}}
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start center"
+           class="mt-8 h-48">
+        <div><b>Теми: </b></div>
+        <div *ngIf="term.themes.length == 0"
+             class="ml-8">
+          Немає тем...
+        </div>
+
+        <mat-chip-list class="ml-8 mat-chip-scrolable" *ngIf="term.themes.length > 0">
+          <mat-chip *ngFor="let theme of term.themes">
+            {{theme.value}}
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+
+
+    </div>
+
+    <div class="header-text p-12"
+         fxLayout="row" fxLayoutAlign="space-between center">
+      <div><b>Пов'язані терміни:</b></div>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-icon-button (click)="isMosaic = !isMosaic"
+                matTooltip="{{isMosaic ? 'Мозаїка' : 'Список'}}">
+          <mat-icon *ngIf="!isMosaic">view_list</mat-icon>
+          <mat-icon *ngIf="isMosaic">view_module</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <div *ngIf="isMosaic"
+           fxLayout="row wrap"
+           fxLayoutAlign="space-between start"
+           [@listAnimation]="randomTerms.length">
+
+        <div *ngFor="let item of term.relatedTerms"
+             fxFlex="1 1 32.5"
+             fxFlex.lt-md="1 1 49"
+             fxFlex.xs="1 1 100"
+             class="mb-12">
+          <term-content [term]="getTerm(item)" [showThemes]="false"></term-content>
+        </div>
+
+      </div>
+
+      <div *ngIf="!isMosaic"
+           fxLayout="column" fxLayoutGap="12px"
+           fxLayoutAlign="start stretch"
+           [@listAnimation]="randomTerms.length">
+
+        <div *ngFor="let item of term.relatedTerms">
+          <term-content [term]="getTerm(item)" [showThemes]="false"></term-content>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="header-text p-12"
+         fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="h-40" fxLayout="row" fxLayoutAlign="start center">
+        <b>Випадкові терміни:</b>
+      </div>
+    </div>
+
+    <div>
+      <div *ngIf="isMosaic"
+           fxLayout="row wrap"
+           fxLayoutAlign="space-between start"
+           [@listAnimation]="randomTerms.length">
+
+        <div *ngFor="let item of randomTerms"
+             fxFlex="1 1 32.5"
+             fxFlex.lt-md="1 1 49"
+             fxFlex.xs="1 1 100"
+             class="mb-12">
+          <term-content [term]="item"></term-content>
+        </div>
+
+      </div>
+
+      <div *ngIf="!isMosaic"
+           fxLayout="column" fxLayoutGap="12px"
+           fxLayoutAlign="start stretch"
+           [@listAnimation]="randomTerms.length">
+
+        <div *ngFor="let item of randomTerms">
+          <term-content [term]="item"></term-content>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
