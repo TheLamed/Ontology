@@ -42,6 +42,8 @@ export class ViewTermsService implements Resolve<any> {
             this._isSubscribed = true;
           }
 
+          this._contentService.getRandomTerms.next(9);
+
           resolve();
         },
         reject

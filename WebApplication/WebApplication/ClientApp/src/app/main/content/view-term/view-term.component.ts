@@ -9,6 +9,7 @@ import { setCookie, getCookie } from "../../shared/shared.functions";
 import { TermContentModel } from "../../../../models/content/term-content.model";
 import { TermSimpleModel } from "../../../../models/content/term-simple.model";
 import { trigger, transition, query, style, stagger, animate } from "@angular/animations";
+import { SafeHtml, DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: 'view-term',
@@ -30,6 +31,8 @@ export class ViewTermComponent implements OnInit {
   term: TermViewModel;
   randomTerms: TermContentModel[] = [];
 
+  currentPopoverTerms: TermSimpleModel[] = [];
+
   set isMosaic(value: boolean) {
     setCookie('isMosaic', value ? 'true' : 'false');
   }
@@ -42,6 +45,8 @@ export class ViewTermComponent implements OnInit {
     else
       return true;
   }
+
+  startTermRegexp = /<term id="(\d+(?:,[ ]?\d+)*)">([^<>]+)<\/term>/gim;
 
   private _unsubscribe: Subject<any>;
 
@@ -76,12 +81,41 @@ export class ViewTermComponent implements OnInit {
 
   }
 
-  getDescription(): string {
-    return this.term.description;
+  getDescription() {
+    let str = this.term.description;
+
+    str = str.replace(this.startTermRegexp, (value: string, ids: string, term: string) => {
+      return "<splt><term>" + ids + "<ids>" + term + "<splt>";
+    });
+
+    let output = str.split('<splt>');
+
+    return output;
+  }
+
+  setCurrentPopoverTerms(term: string) {
+    term = term.replace('<term>', "");
+
+    let arr = term.split('<ids>');
+
+    this.currentPopoverTerms = arr[0]
+      .split(',')
+      .map(v => +v)
+      .filter((v, i, objs) => objs.indexOf(v) === i)
+      .map(v => this.term.relatedTerms.find(f => f.id == v));
+  }
+
+  getTermValue(term: string) {
+    let arr = term.split('<ids>');
+    return arr[1];
+  }
+
+  isTerm(value: string) {
+    return value.indexOf('<term>') == 0;
   }
 
   onFind() {
-    this._router.navigateByUrl('');
+    this._router.navigateByUrl('/');
   }
 
   getTerm(value: TermSimpleModel): TermContentModel {

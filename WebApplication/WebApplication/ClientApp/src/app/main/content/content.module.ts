@@ -5,6 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatButtonModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatPaginatorModule, MatProgressSpinnerModule, MatSortModule, MatTooltipModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
+import { MdePopoverModule } from '@material-extended/mde';
 import { FindComponent } from './find/find.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { TermContentComponent } from './term-content/term-content.component';
@@ -52,6 +53,8 @@ const routes: Routes = [
     MatTooltipModule,
     MatMenuModule,
     MatProgressSpinnerModule,
+
+    MdePopoverModule,
   ],
   providers: [
     ViewTermsService,

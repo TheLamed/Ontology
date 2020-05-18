@@ -41,8 +41,27 @@
       </h4>
 
       <div class="mt-8">
-        {{getDescription()}}
+        <span *ngFor="let item of getDescription()">
+          <span *ngIf="!isTerm(item)">
+            {{item}}
+          </span>
+
+          <span *ngIf="isTerm(item)" class="popover-trgr"
+                [mdePopoverTriggerFor]="appPopover" mdePopoverTriggerOn="hover"
+                (mouseenter)="setCurrentPopoverTerms(item)">
+            {{getTermValue(item)}}
+          </span>
+        </span>
       </div>
+
+      <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+        <div class="w-300"
+             fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="4px">
+          <div *ngFor="let item of currentPopoverTerms">
+            <term-content [term]="getTerm(item)" [showThemes]="false"></term-content>
+          </div>
+        </div>
+      </mde-popover>
 
       <div fxLayout="row" fxLayoutAlign="start center"
            class="mt-8 h-48">
@@ -63,7 +82,8 @@
     </div>
 
     <div class="header-text p-12"
-         fxLayout="row" fxLayoutAlign="space-between center">
+         fxLayout="row" fxLayoutAlign="space-between center"
+         *ngIf="term.relatedTerms.length > 0">
       <div><b>Пов'язані терміни:</b></div>
       <div fxLayout="row" fxLayoutAlign="end center">
         <button mat-icon-button (click)="isMosaic = !isMosaic"
@@ -104,8 +124,13 @@
 
     <div class="header-text p-12"
          fxLayout="row" fxLayoutAlign="space-between center">
-      <div class="h-40" fxLayout="row" fxLayoutAlign="start center">
-        <b>Випадкові терміни:</b>
+      <div><b>Випадкові терміни:</b></div>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-icon-button (click)="isMosaic = !isMosaic"
+                matTooltip="{{isMosaic ? 'Мозаїка' : 'Список'}}">
+          <mat-icon *ngIf="!isMosaic">view_list</mat-icon>
+          <mat-icon *ngIf="isMosaic">view_module</mat-icon>
+        </button>
       </div>
     </div>
 
