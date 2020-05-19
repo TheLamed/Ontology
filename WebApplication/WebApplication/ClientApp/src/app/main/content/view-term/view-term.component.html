@@ -12,7 +12,7 @@
          fxLayout="row" fxLayoutAlign="space-between center">
       <div><b>Термін:</b></div>
       <div fxLayout="row" fxLayoutAlign="end center">
-        <a mat-icon-button [routerLink]="['']"
+        <a mat-icon-button [routerLink]="['/']"
            matTooltip="На головну">
           <mat-icon>reply</mat-icon>
         </a>
@@ -83,7 +83,7 @@
 
     <div class="header-text p-12"
          fxLayout="row" fxLayoutAlign="space-between center"
-         *ngIf="term.relatedTerms.length > 0">
+         *ngIf="term == null || term.relatedTerm == null || term.relatedTerms.length > 0">
       <div><b>Пов'язані терміни:</b></div>
       <div fxLayout="row" fxLayoutAlign="end center">
         <button mat-icon-button (click)="isMosaic = !isMosaic"

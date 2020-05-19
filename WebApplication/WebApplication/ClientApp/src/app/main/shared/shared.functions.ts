@@ -9,8 +9,6 @@ export function setCookie(key: string, value: string, time ?: Date) {
   cookie += "; path=/";
 
   document.cookie = cookie;
-
-  this.cookieChanged.next(key);
 }
 
 export function getCookie(key: string): string {
