@@ -13,7 +13,7 @@ namespace WebApplication.Services
         private const double mWeightThreshold = 0.7;
         private const int mNumChars = 4;
 
-        private const double minValue = 0.7;
+        private const double minValue = 0.85;
 
         #endregion
 
@@ -111,8 +111,8 @@ namespace WebApplication.Services
             int lNumTransposed = lNumHalfTransposed / 2;
             double lNumCommonD = lNumCommon;
             double lWeight = (lNumCommonD / lLen1
-                             + lNumCommonD / lLen2
-                             + (lNumCommon - lNumTransposed) / lNumCommonD) / 3.0;
+                + lNumCommonD / lLen2
+                + (lNumCommon - lNumTransposed) / lNumCommonD) / 3.0;
 
             if (lWeight <= mWeightThreshold) 
                 return lWeight;

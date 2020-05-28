@@ -98,22 +98,28 @@ namespace WebApplication.Services.Admin
             var info = new BindingInfoModel();
 
             info.InProgress = _isProcessing;
-
-            using (var session = _db.GetSession())
+            try
             {
-                var countResult = await session.RunAsync(_transactions.GetTotalTermsCount());
-                var countRecord = await countResult.SingleAsync();
-                info.TotalCount = (long)(countRecord.Values.Single().Value);
+                using (var session = _db.GetSession())
+                {
+                    var countResult = await session.RunAsync(_transactions.GetTotalTermsCount());
+                    var countRecord = await countResult.SingleAsync();
+                    info.TotalCount = (long)(countRecord.Values.Single().Value);
 
-                var unindexedResult = await session.RunAsync(_transactions.GetUnindexedTermsCount());
-                var unindexedRecord = await unindexedResult.SingleAsync();
-                info.UnindexedCount = (long)(unindexedRecord.Values.Single().Value);
+                    var unindexedResult = await session.RunAsync(_transactions.GetUnindexedTermsCount());
+                    var unindexedRecord = await unindexedResult.SingleAsync();
+                    info.UnindexedCount = (long)(unindexedRecord.Values.Single().Value);
+                }
+
+                if (_isProcessing)
+                    info.Percent = ((1.0 * _indexedCount * _countForIndex + _countForIndexDone * _countForIndex) / (1.0 * _unindexedCount * _countForIndex)) * 100;
+                else
+                    info.Percent = 100 - (1.0 * info.UnindexedCount / info.TotalCount * 100);
             }
-
-            if (_isProcessing)
-                info.Percent = ((1.0 * _indexedCount * _countForIndex + _countForIndexDone * _countForIndex) / (1.0 * _unindexedCount * _countForIndex)) * 100;
-            else
-                info.Percent = 100 - (1.0 * info.UnindexedCount / info.TotalCount * 100);
+            catch (Exception)
+            {
+                return info;
+            }
 
             return info;
         }

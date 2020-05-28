@@ -10,7 +10,7 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers.Admin
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/term")]
     public class TermController : ControllerBase

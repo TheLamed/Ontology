@@ -28,3 +28,8 @@ mat-table {
 .unindexed {
   color: $url-color;
 }
+
+.terms-table{
+  max-height: calc(100vh - 214px);
+  overflow: auto;
+}

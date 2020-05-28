@@ -1,6 +1,8 @@
 ﻿using Neo4j.Driver.V1;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication.Interfaces.Admin;
@@ -47,10 +49,10 @@ namespace WebApplication.Services.Admin
                 else
                     nodeId = node.Id;
 
-                if(model.Themes != null)
+                if (model.Themes != null)
                     foreach (var item in model.Themes)
                         await session.RunAsync(
-                            string.Format(_transactions.AddThemeToTerm(), nodeId, item), 
+                            string.Format(_transactions.AddThemeToTerm(), nodeId, item),
                             model
                         );
             }
@@ -151,6 +153,20 @@ namespace WebApplication.Services.Admin
                 };
             }
         }
+
+        //public async Task<bool> ReadTermsFromJSON()
+        //{
+        //    var text = await File.ReadAllTextAsync("terms.json");
+        //    var list = JsonConvert.DeserializeObject<List<EditTermModel>>(text);
+
+        //    foreach (var item in list)
+        //    {
+        //        item.Themes = new List<long>(){ 53 };
+        //        await AddTerm(item);
+        //    }
+
+        //    return true;
+        //}
 
         #endregion
     }

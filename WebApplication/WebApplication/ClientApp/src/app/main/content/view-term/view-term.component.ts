@@ -10,6 +10,7 @@ import { TermContentModel } from "../../../../models/content/term-content.model"
 import { TermSimpleModel } from "../../../../models/content/term-simple.model";
 import { trigger, transition, query, style, stagger, animate } from "@angular/animations";
 import { SafeHtml, DomSanitizer } from "@angular/platform-browser";
+import { UsabilitiesService } from "../../../services/usabilities.service";
 
 @Component({
   selector: 'view-term',
@@ -54,6 +55,7 @@ export class ViewTermComponent implements OnInit {
     private _router: Router,
     private _contentService: ContentService,
     private _viewService: ViewTermsService,
+    private _usabilities: UsabilitiesService,
   ) {
     this._unsubscribe = new Subject<any>();
   }
@@ -127,6 +129,15 @@ export class ViewTermComponent implements OnInit {
     tmp.themes = [];
 
     return tmp;
+  }
+
+  getUrl(url: string) {
+    return this._usabilities.extractHostname(url);
+  }
+
+  getUrls(text: string) {
+    let urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, url => '<a class="url" href="' + url + '" target="_blank">' + this.getUrl(url) + '</a>')
   }
 
 }

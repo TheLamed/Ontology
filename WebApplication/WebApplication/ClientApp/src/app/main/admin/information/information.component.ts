@@ -48,4 +48,8 @@ export class InformationComponent implements OnInit, OnDestroy {
   startProcessing() {
     this._informationService.startProcessing.next();
   }
+
+  getRounded() {
+    return Math.round(this.percent * 100) / 100;
+  }
 }
