@@ -14,5 +14,6 @@ namespace WebApplication.Interfaces.Admin
         Task<bool> AddThemeToTerm(long tremId, long themeId);
         Task<bool> DeleteThemeFromTerm(long tremId, long themeId);
         Task<PagingList<TermModel>> GetTerms(int pn = 0, int ps = 10, string sort = "acs");
+        Task<bool> ReadTermsFromJSON();
     }
 }

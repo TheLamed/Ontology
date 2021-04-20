@@ -28,7 +28,8 @@ namespace WebApplication.Services
                 AuthTokens.Basic(
                     configuration["DB:Username"], 
                     configuration["DB:Password"]
-                )
+                ),
+                Config.Builder.WithEncryptionLevel(EncryptionLevel.None).ToConfig()
             );
         }
 

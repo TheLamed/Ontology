@@ -98,6 +98,16 @@ namespace WebApplication.Controllers.Admin
         {
             return Ok(await _termService.GetTerms(pn, ps, sort));
         }
+        
+        //[HttpGet]
+        //[Route("readfromjson")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<ActionResult<PagingList<TermModel>>> ReadFromJSON
+        //(
+        //)
+        //{
+        //    return Ok(await _termService.ReadTermsFromJSON());
+        //}
 
         #endregion
     }

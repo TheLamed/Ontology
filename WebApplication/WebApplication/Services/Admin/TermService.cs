@@ -154,19 +154,19 @@ namespace WebApplication.Services.Admin
             }
         }
 
-        //public async Task<bool> ReadTermsFromJSON()
-        //{
-        //    var text = await File.ReadAllTextAsync("terms.json");
-        //    var list = JsonConvert.DeserializeObject<List<EditTermModel>>(text);
+        public async Task<bool> ReadTermsFromJSON()
+        {
+            var text = await File.ReadAllTextAsync("terms.json");
+            var list = JsonConvert.DeserializeObject<List<EditTermModel>>(text);
 
-        //    foreach (var item in list)
-        //    {
-        //        item.Themes = new List<long>(){ 53 };
-        //        await AddTerm(item);
-        //    }
+            foreach (var item in list)
+            {
+                item.Themes = new List<long>() { 53 };
+                await AddTerm(item);
+            }
 
-        //    return true;
-        //}
+            return true;
+        }
 
         #endregion
     }
