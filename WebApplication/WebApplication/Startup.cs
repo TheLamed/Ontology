@@ -73,6 +73,8 @@ namespace WebApplication
             services.AddTransient<ITermService, TermService>();
             services.AddTransient<IContentService, ContentService>();
             services.AddTransient<ContentTransactionsService>();
+            services.AddTransient<TextProcessingService>();
+            services.AddTransient<TextPrecessingTransactionsService>();
 
             services.AddSingleton<ITermBindingService, TermBindingService>();
         }

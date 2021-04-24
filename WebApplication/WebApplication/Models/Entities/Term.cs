@@ -1,6 +1,7 @@
 ﻿using Neo4j.Driver.V1;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,19 @@ namespace WebApplication.Models.Entities
                 key[0] = char.ToUpper(key[0]);
                 type.GetProperty(key.ToString())?.SetValue(this, item.Value, null);
             }
+        }
+    }
+
+    public class TermComparer : IEqualityComparer<Term>
+    {
+        public bool Equals([AllowNull] Term x, [AllowNull] Term y)
+        {
+            return x.Id == y.Id;
+        }
+
+        public int GetHashCode([DisallowNull] Term obj)
+        {
+            return obj.GetHashCode();
         }
     }
 }
