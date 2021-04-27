@@ -1,0 +1,205 @@
+<div class="back p-24 scrolling-container"
+     fxLayout="row" fxLayoutAlign="center start">
+  <div class="main-page-width"
+       fxLayout="column" fxLayoutAlign="start stretch">
+
+    <div class="header-text p-12"
+         fxLayout="row" fxLayoutAlign="space-between center">
+      <div><b>Аналіз тексту</b></div>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <a mat-icon-button [routerLink]="['/']"
+           matTooltip="На головну">
+          <mat-icon>reply</mat-icon>
+        </a>
+      </div>
+    </div>
+
+    <div class="card py-200"
+         fxLayout="column" fxLayoutAlign="center center"
+         *ngIf="isLoading">
+
+      <mat-spinner color="primary"></mat-spinner>
+      <div class="pt-12">Триває аналіз тексту</div>
+      <div>Це може зайняти декілька хвилин</div>
+
+    </div>
+
+    <div class="card analization-result"
+         fxLayout="column" fxLayoutAlign="start stretch"
+         *ngIf="!isLoading">
+
+      <mat-tab-group>
+        <mat-tab label="Текст">
+          <div class="p-12" fxLayout="column" fxLayoutAlign="start stretch">
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+              <div>
+                <b>{{analysedText.semanticSize | number:'.1-3'}}</b> - Семантичний розмір тексту, відносно онтології "Інфоратика"
+              </div>
+            </div>
+            <div class="divider-block my-12"></div>
+            <div *ngIf="!request.includeTermsShowing" style="white-space: pre-wrap">
+              {{analysedText.text}}
+            </div>
+            <div *ngIf="request.includeTermsShowing" style="white-space: pre-wrap">
+
+              <div class="mt-8">
+                <span *ngFor="let item of getDescription(analysedText.text)">
+                  <span *ngIf="!isTerm(item)">
+                    {{item}}
+                  </span>
+
+                  <span *ngIf="isTerm(item)" class="popover-trgr"
+                        [mdePopoverTriggerFor]="appPopover" mdePopoverTriggerOn="hover"
+                        (mouseenter)="setCurrentPopoverTerms(item)">
+                    {{getTermValue(item)}}
+                  </span>
+                </span>
+              </div>
+
+              <mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+                <div class="w-300"
+                     fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="4px">
+                  <div *ngFor="let item of currentPopoverTerms">
+                    <term-content [term]="getTerm(item)" [showThemes]="false"></term-content>
+                  </div>
+                </div>
+              </mde-popover>
+
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Абзаци" *ngIf="request.includeParagraphAnalization">
+
+          <div class="p-12" fxLayout="column" fxLayoutAlign="start stretch"
+               *ngFor="let paragraph of analysedText.paragraphs">
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+              <div>
+                <b>{{paragraph.semanticSize | number:'.1-3'}}</b> - Семантичний розмір абзацу, відносно онтології "Інфоратика"
+              </div>
+            </div>
+            <div class="divider-block my-12"></div>
+            <div *ngIf="!request.includeTermsShowing" style="white-space: pre-wrap">
+              {{paragraph.text}}
+            </div>
+            <div *ngIf="request.includeTermsShowing" style="white-space: pre-wrap">
+
+              <div class="mt-8">
+                <span *ngFor="let item of getDescription(paragraph.text)">
+                  <span *ngIf="!isTerm(item)">
+                    {{item}}
+                  </span>
+
+                  <span *ngIf="isTerm(item)" class="popover-trgr"
+                        [mdePopoverTriggerFor]="appPopover2" mdePopoverTriggerOn="hover"
+                        (mouseenter)="setCurrentPopoverTerms(item)">
+                    {{getTermValue(item)}}
+                  </span>
+                </span>
+              </div>
+
+              <mde-popover #appPopover2="mdePopover" [mdePopoverOverlapTrigger]="false">
+                <div class="w-300"
+                     fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="4px">
+                  <div *ngFor="let item of currentPopoverTerms">
+                    <term-content [term]="getTerm(item)" [showThemes]="false"></term-content>
+                  </div>
+                </div>
+              </mde-popover>
+
+            </div>
+
+            <div class="divider-block mt-12 mb-24"></div>
+          </div>
+
+        </mat-tab>
+        <mat-tab label="Речення" *ngIf="request.includeSentenceAnalization">
+
+          <div class="p-12" fxLayout="column" fxLayoutAlign="start stretch"
+               *ngFor="let sentence of getSentences()">
+            <div fxLayout="column" fxLayoutAlign="start stretch">
+              <div>
+                <b>{{sentence.semanticSize | number:'.1-3'}}</b> - Семантичний розмір речення, відносно онтології "Інфоратика"
+              </div>
+            </div>
+            <div class="divider-block my-12"></div>
+            <div *ngIf="!request.includeTermsShowing" style="white-space: pre-wrap">
+              {{sentence.text}}
+            </div>
+            <div *ngIf="request.includeTermsShowing" style="white-space: pre-wrap">
+
+              <div class="mt-8">
+                <span *ngFor="let item of getDescription(sentence.text)">
+                  <span *ngIf="!isTerm(item)">
+                    {{item}}
+                  </span>
+
+                  <span *ngIf="isTerm(item)" class="popover-trgr"
+                        [mdePopoverTriggerFor]="appPopover3" mdePopoverTriggerOn="hover"
+                        (mouseenter)="setCurrentPopoverTerms(item)">
+                    {{getTermValue(item)}}
+                  </span>
+                </span>
+              </div>
+
+              <mde-popover #appPopover3="mdePopover" [mdePopoverOverlapTrigger]="false">
+                <div class="w-300"
+                     fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="4px">
+                  <div *ngFor="let item of currentPopoverTerms">
+                    <term-content [term]="getTerm(item)" [showThemes]="false"></term-content>
+                  </div>
+                </div>
+              </mde-popover>
+
+            </div>
+
+            <div class="divider-block mt-12 mb-24"></div>
+          </div>
+
+        </mat-tab>
+      </mat-tab-group>
+
+    </div>
+
+    <div class="header-text p-12"
+         fxLayout="row" fxLayoutAlign="space-between center"
+         *ngIf="analysedText != null">
+      <div><b>Пов'язані терміни:</b></div>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <button mat-icon-button (click)="isMosaic = !isMosaic"
+                matTooltip="{{isMosaic ? 'Мозаїка' : 'Список'}}">
+          <mat-icon *ngIf="!isMosaic">view_list</mat-icon>
+          <mat-icon *ngIf="isMosaic">view_module</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="analysedText != null">
+      <div *ngIf="isMosaic"
+           fxLayout="row wrap"
+           fxLayoutAlign="space-between start"
+           [@listAnimation]="analysedText.length">
+
+        <div *ngFor="let item of analysedText.terms"
+             fxFlex="1 1 32.5"
+             fxFlex.lt-md="1 1 49"
+             fxFlex.xs="1 1 100"
+             class="mb-12">
+          <term-content [term]="getTerm(item)" [showThemes]="false"></term-content>
+        </div>
+
+      </div>
+
+      <div *ngIf="!isMosaic"
+           fxLayout="column" fxLayoutGap="12px"
+           fxLayoutAlign="start stretch"
+           [@listAnimation]="analysedText.length">
+
+        <div *ngFor="let item of analysedText.terms">
+          <term-content [term]="getTerm(item)" [showThemes]="false"></term-content>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

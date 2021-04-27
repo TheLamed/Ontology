@@ -1,0 +1,53 @@
+<div class="back p-24 scrolling-container"
+     fxLayout="row" fxLayoutAlign="center start">
+  <div class="main-page-width"
+       fxLayout="column" fxLayoutAlign="start stretch">
+
+    <div class="header-text p-12"
+         fxLayout="row" fxLayoutAlign="space-between center">
+      <div><b>Аналіз тексту</b></div>
+      <div fxLayout="row" fxLayoutAlign="end center">
+        <a mat-icon-button [routerLink]="['/']"
+           matTooltip="На головну">
+          <mat-icon>reply</mat-icon>
+        </a>
+      </div>
+    </div>
+
+    <div class="card p-12"
+         fxLayout="column" fxLayoutAlign="start stretch">
+
+      <form [formGroup]="form" (submit)="sendForm()"
+            fxLayout="column"
+            fxLayoutAlign="start stretch">
+        <mat-form-field appearance="outline">
+          <mat-label>Текст</mat-label>
+          <textarea matInput rows="25"
+                    formControlName="text"
+                    required></textarea>
+          <mat-error *ngIf="form.controls['text'].hasError('required')">Введіть текст</mat-error>
+        </mat-form-field>
+
+        <div fxLayout="row" fxLayoutAlign="space-between start" class="ml-24">
+          <div fxFlex="1 1 50" fxLayout="column" fxLayoutAlign="start stretch">
+            <div><mat-checkbox color="primary" formControlName="includeTermsShowing">Показати терміни</mat-checkbox></div>
+          </div>
+          <div fxFlex="1 1 50" fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="12px">
+            <div><mat-checkbox color="primary" formControlName="includeParagraphAnalization">Аналіз абзаців</mat-checkbox></div>
+            <div><mat-checkbox color="primary" formControlName="includeSentenceAnalization" *ngIf="form.controls['includeParagraphAnalization'].value == true">Аналіз речень</mat-checkbox></div>
+          </div>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="end center">
+          <button mat-raised-button
+                  type="submit"
+                  color="primary">
+            Аналіз тексту
+          </button>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,14 @@
+@import 'src/app.theme.scss';
+
+.header-text {
+  color: #FFFFFF;
+}
+
+.popover-trgr {
+  color: $url-color;
+  cursor: pointer;
+
+  &:hover {
+    color: $url-color-hover;
+  }
+}

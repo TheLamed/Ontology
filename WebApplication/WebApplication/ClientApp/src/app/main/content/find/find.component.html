@@ -20,6 +20,12 @@
             (click)="moreOpened = !moreOpened">
       <mat-icon>filter_list</mat-icon>
     </button>
+
+    <a mat-fab color="primary" [routerLink]="['/ta']"
+       matTooltip="Провести аналіз тексту"
+       class="ml-12">
+      <mat-icon>assessment</mat-icon>
+    </a>
   </div>
 
   <div [@collapsable]="moreOpened ? 'expanded' : 'collapsed'"

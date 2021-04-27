@@ -53,12 +53,14 @@
     <None Remove="ClientApp\src\app\services\api\api-information.service.ts" />
     <None Remove="ClientApp\src\app\services\api\api-login.service.ts" />
     <None Remove="ClientApp\src\app\services\api\api-terms.service.ts" />
+    <None Remove="ClientApp\src\app\services\api\api-text-analysis.service.ts" />
     <None Remove="ClientApp\src\app\services\api\api-themes.service.ts" />
     <None Remove="ClientApp\src\app\services\auth.service.ts" />
     <None Remove="ClientApp\src\app\services\content.service.ts" />
     <None Remove="ClientApp\src\app\services\dialog.service.ts" />
     <None Remove="ClientApp\src\app\services\information.service.ts" />
     <None Remove="ClientApp\src\app\services\term.service.ts" />
+    <None Remove="ClientApp\src\app\services\text-analysis.service.ts" />
     <None Remove="ClientApp\src\app\services\themes.service.ts" />
     <None Remove="ClientApp\src\app\services\usabilities.service.ts" />
     <None Remove="ClientApp\src\decorators\api.decorator.ts" />
@@ -77,6 +79,10 @@
     <None Remove="ClientApp\src\models\terms\edit-term.model.ts" />
     <None Remove="ClientApp\src\models\terms\term.model.ts" />
     <None Remove="ClientApp\src\models\terms\theme-to-term.model.ts" />
+    <None Remove="ClientApp\src\models\text-analysis\analysed-paragraph.model.ts" />
+    <None Remove="ClientApp\src\models\text-analysis\analysed-senetence.model.ts" />
+    <None Remove="ClientApp\src\models\text-analysis\analysed-text.model.ts" />
+    <None Remove="ClientApp\src\models\text-analysis\text-analization-request.model.ts" />
     <None Remove="ClientApp\src\models\themes\add-theme.model.ts" />
     <None Remove="ClientApp\src\models\themes\theme.model.ts" />
     <None Remove="ClientApp\src\models\user.model.ts" />
@@ -132,6 +138,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\services\api\api-content.service.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\services\api\api-text-analysis.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api\api-terms.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api\api-themes.service.ts">
       <SubType>Code</SubType>
@@ -142,6 +149,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\services\dialog.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\information.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\term.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\text-analysis.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\themes.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\usabilities.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\decorators\api.decorator.ts" />
@@ -160,6 +168,10 @@
     <TypeScriptCompile Include="ClientApp\src\models\terms\edit-term.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\terms\term.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\terms\theme-to-term.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\text-analysis\analysed-paragraph.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\text-analysis\analysed-senetence.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\text-analysis\analysed-text.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\models\text-analysis\text-analization-request.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\themes\add-theme.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\themes\theme.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\models\user.model.ts" />

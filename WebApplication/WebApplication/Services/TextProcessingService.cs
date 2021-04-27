@@ -374,6 +374,17 @@ namespace WebApplication.Services
 
             response.SemanticSize = await SSOTT(structuredText);
 
+            List<Term> textTerms = null;
+
+            if (model.IncludeTermsShowing)
+            {
+                textTerms = structuredText.Terms
+                    .Distinct(new TermComparer())
+                    .ToList();
+
+                response.Text = await IndexTextAsync(structuredText.OriginalText, textTerms);
+            }
+
             if (model.IncludeParagraphAnalization)
             {
                 response.Paragraphs = new List<AnalysedParagraphModel>();
@@ -396,11 +407,7 @@ namespace WebApplication.Services
 
                             if (model.IncludeTermsShowing)
                             {
-                                var sentenceTerms = sentence.Terms
-                                    .Distinct(new TermComparer())
-                                    .ToList();
-
-                                responseSenetence.Text = await IndexTextAsync(sentence.OriginalText, sentenceTerms);
+                                responseSenetence.Text = await IndexTextAsync(sentence.OriginalText, textTerms);
                             }
 
                             responseParagraph.Sentences.Add(responseSenetence);
@@ -409,24 +416,11 @@ namespace WebApplication.Services
 
                     if (model.IncludeTermsShowing)
                     {
-                        var paragraphTerms = paragraph.Terms
-                            .Distinct(new TermComparer())
-                            .ToList();
-
-                        responseParagraph.Text = await IndexTextAsync(paragraph.OriginalText, paragraphTerms);
+                        responseParagraph.Text = await IndexTextAsync(paragraph.OriginalText, textTerms);
                     }
 
                     response.Paragraphs.Add(responseParagraph);
                 }
-            }
-
-            if (model.IncludeTermsShowing)
-            {
-                var textTerms = structuredText.Terms
-                    .Distinct(new TermComparer())
-                    .ToList();
-
-                response.Text = await IndexTextAsync(structuredText.OriginalText, textTerms);
             }
 
             response.Terms = structuredText.Terms
@@ -476,6 +470,7 @@ namespace WebApplication.Services
         {
             var output = text;
             var seperators = new Regex("[.,?!:;'\"_@#$%^&*=+()\\[\\]{}~\t\n-]");
+            var diggitsReg = new Regex(@"\d+");
 
             var description = seperators
                 .Replace(text, " ")
@@ -503,7 +498,7 @@ namespace WebApplication.Services
                     }
                 }
 
-                foreach (var word in words)
+                foreach (var word in words.Where(v => !diggitsReg.IsMatch(v)))
                     output = output.Replace(word, $"<term id=\"{item.Id}\">" + word + "</term>");
             }
 

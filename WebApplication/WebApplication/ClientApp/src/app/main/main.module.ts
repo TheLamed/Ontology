@@ -16,6 +16,9 @@ import { InformationApiService } from "../services/api/api-information.service";
 import { InformationService } from "../services/information.service";
 import { ContentApiService } from "../services/api/api-content.service";
 import { ContentService } from "../services/content.service";
+import { TextAnalysisService } from "../services/text-analysis.service";
+import { TextAnalysisApiService } from "../services/api/api-text-analysis.service";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 //#region Paginator
 
@@ -66,6 +69,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
+    //BrowserAnimationsModule,
 
     ConfirmDialogModule,
 
@@ -82,12 +86,14 @@ const routes: Routes = [
     TermsApiService,
     InformationApiService,
     ContentApiService,
+    TextAnalysisApiService,
 
     AuthService,
     ThemesService,
     TermsService,
     InformationService,
     ContentService,
+    TextAnalysisService,
 
     { provide: MatPaginatorIntl, useValue: getUkrainianPaginatorIntl() }
   ],
